@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unclench</title>
+<meta name="description" content="Two minutes to put the day down: feet, jaw, shoulders, hands, three exhales, one thing you can see.">
+<meta name="theme-color" content="#f4f1ea">
+<style>
+  :root {
+    --bg: #f4f1ea;
+    --fg: #1a1a1a;
+    --accent: #d23b2a;
+    --muted: #7a766e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #141414; --fg: #f0ece4; --accent: #e4553f; --muted: #8c877d; }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font: 400 18px/1.4 system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  main { width: min(100%, 420px); display: grid; gap: 24px; justify-items: center; text-align: center; }
+  h1 { font-size: 14px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+
+  .box { position: relative; width: min(72vw, 300px); aspect-ratio: 1; cursor: pointer; user-select: none; }
+  .box svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .frame { fill: none; stroke: var(--fg); stroke-width: 2; }
+  .inner { fill: var(--accent); transform-origin: 50% 50%; transform: scale(var(--s, .12)); }
+
+  .label { position: absolute; inset: 0; display: grid; place-content: center; gap: 10px; padding: 18px; pointer-events: none; }
+  .part { font-size: 14px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
+  .ask { font-size: 22px; font-weight: 300; line-height: 1.25; }
+
+  .meta { display: flex; gap: 32px; color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; }
+
+  button {
+    font: inherit; font-size: 14px; border-radius: 0; color: var(--fg); background: none;
+    font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    border: 2px solid var(--fg); padding: 10px 28px; cursor: pointer;
+  }
+  button:hover, button:focus-visible { background: var(--fg); color: var(--bg); outline: none; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+  button[aria-pressed="true"]:hover, button[aria-pressed="true"]:focus-visible { background: none; color: var(--fg); }
+
+
+  .hint { color: var(--muted); font-size: 14px; }
+
+  @media (prefers-reduced-motion: reduce) { .inner { transition: none; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Unclench · 2 minutes</h1>
+
+  <div class="box" id="box" title="Tap to begin or move on">
+    <svg viewBox="0 0 100 100" role="img" aria-label="A small red square inside a frame; it grows one size per step until it fills the frame">
+      <rect class="frame" x="0" y="0" width="100" height="100"/>
+      <rect class="inner" id="inner" x="0" y="0" width="100" height="100"/>
+    </svg>
+    <div class="label" aria-live="polite">
+      <div class="part" id="part">Ready</div>
+      <div class="ask" id="ask">Put the day down for two minutes.</div>
+    </div>
+  </div>
+
+  <div class="meta">
+    <span id="where">Step 0 / 6</span>
+    <span id="left">2:00</span>
+  </div>
+
+  <div class="row">
+    <button id="btn" type="button">Begin</button>
+    <button id="mute" type="button" aria-pressed="true">Sound on</button>
+  </div>
+  <p class="hint">Move on when you are ready. Nothing moves you. Space works too.</p>
+</main>
+
+<script>
+(() => {
+  // Each step: a body part, one small request, a suggested time in seconds.
+  // The square grows during that time; then it waits. Only a tap moves on.
+  const STEPS = [
+    { part: 'Feet',      ask: 'Feel the floor under them.',           secs: 20 },
+    { part: 'Jaw',       ask: 'Let it drop a little.',                 secs: 15 },
+    { part: 'Shoulders', ask: 'Let them fall away from your ears.',    secs: 20 },
+    { part: 'Hands',     ask: 'Open them. Palms up.',                  secs: 15 },
+    { part: 'Breath',    ask: 'Three long exhales.', secs: 30, breath: { inSecs: 4, outSecs: 6, n: 3 } },
+    { part: 'Eyes',      ask: 'One thing you can see. Just look.',     secs: 20 },
+  ];
+  const N = STEPS.length;
+  const TOTAL = STEPS.reduce((a, s) => a + s.secs, 0);   // 120 s
+  const SIZE0 = 0.12;                                     // the clenched square
+  const sizeAt = i => SIZE0 + (1 - SIZE0) * i / N;        // after i steps
+
+  const $ = id => document.getElementById(id);
+  const inner = $('inner'), partEl = $('part'), askEl = $('ask');
+  const whereEl = $('where'), leftEl = $('left'), btn = $('btn'), box = $('box');
+  const muteBtn = $('mute');
+
+  let step = -1;          // -1 ready, 0..N-1 in a step, N done
+  let inStep = 0;         // seconds in the current step
+  let spent = 0;          // suggested seconds of finished steps
+  let actual = 0;         // real seconds since Begin
+  let rang = false;       // the step's "time is up" tone has played
+  let exhale = -1;        // which exhale tone is sounding
+  let running = false, last = 0, raf = 0;
+
+  const fmt = s => { s = Math.max(0, Math.ceil(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+
+  // ---- sound: made here, no files. Nothing plays before the first tap. ----
+  let ctx = null;
+  let sound = true;
+  try { sound = localStorage.getItem('unclench.sound') !== 'off'; } catch (e) {}
+  const showSound = () => { muteBtn.textContent = sound ? 'Sound on' : 'Sound off'; muteBtn.setAttribute('aria-pressed', String(sound)); };
+  showSound();
+  muteBtn.addEventListener('click', () => {
+    sound = !sound; showSound();
+    try { localStorage.setItem('unclench.sound', sound ? 'on' : 'off'); } catch (e) {}
+  });
+  const audio = () => {
+    if (!sound) return null;
+    if (!ctx) { try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return null; } }
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  };
+  // One soft low tone: "the time has passed, if you want".
+  function ping() {
+    const c = audio(); if (!c) return;
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = 'sine'; o.frequency.value = 220;
+    g.gain.setValueAtTime(0, c.currentTime);
+    g.gain.linearRampToValueAtTime(0.12, c.currentTime + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.6);
+    o.connect(g).connect(c.destination);
+    o.start(); o.stop(c.currentTime + 0.6);
+  }
+  // A tone that slides down over the exhale: something to ride the breath on.
+  function slide(secs) {
+    const c = audio(); if (!c) return;
+    const o = c.createOscillator(), g = c.createGain(), t = c.currentTime;
+    o.type = 'sine';
+    o.frequency.setValueAtTime(330, t);
+    o.frequency.exponentialRampToValueAtTime(165, t + secs);
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(0.08, t + 0.3);
+    g.gain.setValueAtTime(0.08, t + secs - 0.5);
+    g.gain.linearRampToValueAtTime(0, t + secs);
+    o.connect(g).connect(c.destination);
+    o.start(t); o.stop(t + secs);
+  }
+
+  // ---- the instrument ----
+  function show() {
+    const s = STEPS[step];
+    partEl.textContent = s.part;
+    askEl.textContent = s.ask;
+    whereEl.textContent = `Step ${step + 1} / ${N}`;
+    btn.textContent = step === N - 1 ? 'Finish' : 'Next';
+  }
+
+  function breathText(s) {
+    const b = s.breath, cycle = b.inSecs + b.outSecs;
+    const k = Math.min(b.n - 1, Math.floor(inStep / cycle));
+    const t = inStep - k * cycle;
+    if (inStep >= b.n * cycle) { askEl.textContent = s.ask; return; }
+    if (t < b.inSecs) { askEl.textContent = `In · ${k + 1} of ${b.n}`; }
+    else {
+      askEl.textContent = `Out, long · ${k + 1} of ${b.n}`;
+      if (exhale !== k) { exhale = k; slide(b.outSecs); }
+    }
+  }
+
+  function tick(now) {
+    if (!running) return;
+    const dt = (now - last) / 1000;
+    last = now;
+    inStep += dt; actual += dt;
+    const s = STEPS[step];
+    const f = Math.min(1, inStep / s.secs);
+    inner.style.setProperty('--s', sizeAt(step) + (sizeAt(step + 1) - sizeAt(step)) * f);
+    leftEl.textContent = fmt(TOTAL - spent - Math.min(inStep, s.secs));
+    if (s.breath) breathText(s);
+    if (f >= 1 && !rang) { rang = true; if (!s.breath) ping(); }
+    raf = requestAnimationFrame(tick);
+  }
+
+  function begin() {
+    step = 0; inStep = 0; spent = 0; actual = 0; rang = false; exhale = -1;
+    audio();                                    // unlock audio on the user's tap
+    show();
+    resume();
+  }
+
+  function next() {
+    spent += STEPS[step].secs;
+    step += 1; inStep = 0; rang = false; exhale = -1;
+    if (step >= N) { finish(); return; }
+    inner.style.setProperty('--s', sizeAt(step));
+    show();
+  }
+
+  function resume() { running = true; last = performance.now(); raf = requestAnimationFrame(tick); }
+  function pause()  { running = false; cancelAnimationFrame(raf); }
+
+  function finish() {
+    pause();
+    step = N;
+    inner.style.setProperty('--s', 1);
+    partEl.textContent = 'Done';
+    askEl.textContent = 'The next thing is yours to choose.';
+    whereEl.textContent = `You took ${fmt(actual)}`;
+    leftEl.textContent = '';
+    btn.textContent = 'Again';
+  }
+
+  function reset() {
+    inner.style.setProperty('--s', SIZE0);
+    partEl.textContent = 'Ready';
+    askEl.textContent = 'Put the day down for two minutes.';
+    whereEl.textContent = `Step 0 / ${N}`;
+    leftEl.textContent = fmt(TOTAL);
+    btn.textContent = 'Begin';
+    step = -1;
+  }
+
+  function act() {
+    if (step < 0) begin();
+    else if (step >= N) reset();
+    else next();
+  }
+
+  btn.addEventListener('click', act);
+  box.addEventListener('click', act);
+  document.addEventListener('keydown', e => {
+    if (e.code === 'Space' && !e.repeat) { e.preventDefault(); act(); }
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (step < 0 || step >= N) return;
+    if (document.hidden) pause(); else if (!running) resume();
+  });
+})();
+</script>
+</body>
+</html>
