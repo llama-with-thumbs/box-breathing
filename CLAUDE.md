@@ -22,7 +22,9 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
 - 11 rounds × 16 s = 2:56, labelled "3 minutes"; change `ROUNDS`/`PHASE` only.
 - Timing from `requestAnimationFrame` deltas; hidden tab pauses; reduced-motion and dark mode respected.
 - No streaks, scores, or notifications: the user runs the instrument, never the reverse.
-- Bauhaus: square, one accent (red dot), system font, no ornament.
+- Bauhaus: square, system font, no ornament. On `index.html` the square is the light
+  (Turrell): no frame, brightens on inhale, dims on exhale, hue drifts 215→325→215 over
+  the session, white dot walks the edge. Waking Up gave: air, light type, one filled button.
 
 - `unclench.html`: 6 steps with suggested seconds (`STEPS`), total 120 s. The square
   grows from `SIZE0` to 1 over the step's time, then waits; only a tap advances.
@@ -34,11 +36,12 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
 
 `index.html` and `unclench.html` written and checked in Chrome (steps, word box,
 breath text, finish, no console errors). Vlad chose visual B (growing square),
-sound on with mute; the one-word box was tried and removed. Git initialised, nothing committed,
-no remote. Local test server: `python -m http.server 8771` (8765 is taken by
+sound on with mute; the one-word box was tried and removed. Pushed to
+https://github.com/llama-with-thumbs/box-breathing, Pages enabled (main, root):
+https://llama-with-thumbs.github.io/box-breathing/ and /unclench.html. Local test server: `python -m http.server 8771` (8765 is taken by
 the materials project).
 
 ## Next step
 
-Vlad tries `unclench.html` on his phone and says what to change (text, timing,
-sound level). Then commit, push, enable Pages (README has the steps).
+Vlad tries both pages on his phone from the Pages URL and says what to change.
+`unclench.html` has not had the Turrell/Waking Up pass yet; ask whether it should.
