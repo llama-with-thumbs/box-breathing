@@ -1,7 +1,7 @@
 # Box Breathing — context for Claude
 
 Small single-page instruments that help Vlad come back to himself, recover
-agency, and land in the present moment. `index.html` (3-minute 4-4-4-4 box
+agency, and land in the present moment. `index.html` (2-minute 4-4-4-4 box
 breathing, a dot walking a square) is the first. Hosted on GitHub Pages.
 Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
 
@@ -19,7 +19,8 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
 ## Decisions
 
 - One file per instrument, no build, no libraries, no network, no tracking, no accounts.
-- 11 rounds × 16 s = 2:56, labelled "3 minutes"; change `ROUNDS`/`PHASE` only.
+- 8 rounds × 16 s = 2:08, labelled "2 minutes"; change `ROUNDS`/`PHASE` only.
+- Both pages hold a Screen Wake Lock while running (`keepAwake`/`letSleep`); released on pause/finish/hidden.
 - Timing from `requestAnimationFrame` deltas; hidden tab pauses; reduced-motion and dark mode respected.
 - No streaks, scores, or notifications: the user runs the instrument, never the reverse.
 - Bauhaus: square, system font, no ornament. On `index.html` the square is the light

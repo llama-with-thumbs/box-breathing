@@ -114,6 +114,14 @@
   let exhale = -1;        // which exhale tone is sounding
   let running = false, last = 0, raf = 0;
 
+  // Keep the phone's screen on while the timer runs (Android Chrome/Firefox, HTTPS).
+  // Released on pause, finish, or when the tab is hidden. Nothing happens if unsupported.
+  let lock = null;
+  async function keepAwake() {
+    try { if (!lock && navigator.wakeLock) { lock = await navigator.wakeLock.request('screen'); lock.addEventListener('release', () => { lock = null; }); } } catch (e) {}
+  }
+  function letSleep() { if (lock) { lock.release().catch(() => {}); lock = null; } }
+
   const fmt = s => { s = Math.max(0, Math.ceil(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
 
   // ---- sound: made here, no files. Nothing plays before the first tap. ----
@@ -208,8 +216,8 @@
     show();
   }
 
-  function resume() { running = true; last = performance.now(); raf = requestAnimationFrame(tick); }
-  function pause()  { running = false; cancelAnimationFrame(raf); }
+  function resume() { running = true; last = performance.now(); keepAwake(); raf = requestAnimationFrame(tick); }
+  function pause()  { running = false; cancelAnimationFrame(raf); letSleep(); }
 
   function finish() {
     pause();

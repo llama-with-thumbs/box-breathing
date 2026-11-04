@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Box Breathing</title>
-<meta name="description" content="Three minutes of box breathing: inhale 4, hold 4, exhale 4, hold 4.">
+<meta name="description" content="Two minutes of box breathing: inhale 4, hold 4, exhale 4, hold 4.">
 <meta name="theme-color" content="#f4f1ea">
 <style>
   :root {
@@ -62,7 +62,7 @@
 </head>
 <body>
 <main>
-  <h1>Box breathing · 3 minutes</h1>
+  <h1>Box breathing · 2 minutes</h1>
 
   <div class="box" id="box" title="Click to start or pause">
     <svg viewBox="0 0 100 100" role="img" aria-label="A square of light; it brightens as you inhale, dims as you exhale; a dot travels one edge per phase">
@@ -76,7 +76,7 @@
 
   <div class="meta">
     <span id="round">Round 0 / 11</span>
-    <span id="left">2:56</span>
+    <span id="left">2:08</span>
   </div>
 
   <button id="btn" type="button">Start</button>
@@ -87,7 +87,7 @@
 (() => {
   const PHASE = 4;                                  // seconds per side
   const PHASES = ['Inhale', 'Hold', 'Exhale', 'Hold'];
-  const ROUNDS = 11;                                // 11 × 16 s = 2:56 ≈ 3 min
+  const ROUNDS = 8;                                 // 8 × 16 s = 2:08 ≈ 2 min
   const CYCLE = PHASE * 4;
   const TOTAL = CYCLE * ROUNDS;
 
@@ -99,6 +99,14 @@
   const btn = $('btn'), box = $('box');
 
   let running = false, elapsed = 0, last = 0, raf = 0;
+
+  // Keep the phone's screen on while the timer runs (Android Chrome/Firefox, HTTPS).
+  // Released on pause, finish, or when the tab is hidden. Nothing happens if unsupported.
+  let lock = null;
+  async function keepAwake() {
+    try { if (!lock && navigator.wakeLock) { lock = await navigator.wakeLock.request('screen'); lock.addEventListener('release', () => { lock = null; }); } } catch (e) {}
+  }
+  function letSleep() { if (lock) { lock.release().catch(() => {}); lock = null; } }
 
   const fmt = s => { s = Math.max(0, Math.ceil(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
 
@@ -139,18 +147,21 @@
     running = true;
     last = performance.now();
     btn.textContent = 'Pause';
+    keepAwake();
     raf = requestAnimationFrame(tick);
   }
 
   function pause() {
     running = false;
     cancelAnimationFrame(raf);
+    letSleep();
     btn.textContent = elapsed > 0 ? 'Resume' : 'Start';
     phaseEl.textContent = 'Paused';
   }
 
   function finish() {
     running = false;
+    letSleep();
     elapsed = TOTAL;
     dot.setAttribute('cx', 0); dot.setAttribute('cy', 0);
     box.style.setProperty('--l', L0); box.style.setProperty('--h', 215);
