@@ -8,50 +8,56 @@
 <meta name="theme-color" content="#f4f1ea">
 <style>
   :root {
-    --bg: #f4f1ea;
+    --bg: #ece9e2;          /* pale ceiling */
     --fg: #1a1a1a;
-    --accent: #d23b2a;
     --muted: #7a766e;
+    --on: #ffffff;          /* text on the light */
+    --l0: 48; --l1: 64;     /* lightness of the light: exhaled, inhaled */
+    --glow: .35;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #141414; --fg: #f0ece4; --accent: #e4553f; --muted: #8c877d; }
+    :root { --bg: #0b0c10; --fg: #ece9e2; --muted: #8a877f; --l0: 26; --l1: 44; --glow: .6; }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
   body {
     background: var(--bg);
     color: var(--fg);
-    font: 400 18px/1.4 system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    font: 300 18px/1.4 system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    transition: background 1s;
     display: grid;
     place-items: center;
     padding: 16px;
     -webkit-tap-highlight-color: transparent;
   }
-  main { width: min(100%, 420px); display: grid; gap: 28px; justify-items: center; text-align: center; }
-  h1 { font-size: 14px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+  main { width: min(100%, 420px); display: grid; gap: 36px; justify-items: center; text-align: center; }
+  h1 { font-size: 13px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
 
-  .box { position: relative; width: min(72vw, 300px); aspect-ratio: 1; cursor: pointer; user-select: none; }
-  .box svg { width: 100%; height: 100%; display: block; overflow: visible; }
-  .fill { fill: var(--fg); opacity: .08; transform-origin: 50% 50%; transform: scale(var(--s, 0)); }
-  .frame { fill: none; stroke: var(--fg); stroke-width: 2; }
-  .dot { fill: var(--accent); }
+  .box {
+    position: relative; width: min(72vw, 300px); aspect-ratio: 1; cursor: pointer; user-select: none;
+    --h: 215; --l: var(--l0);
+    background: hsl(var(--h) 60% calc(var(--l) * 1%));
+    box-shadow: 0 0 90px hsl(var(--h) 60% calc(var(--l) * 1%) / var(--glow));
+  }
+  .box svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+  .dot { fill: var(--on); opacity: .9; }
 
-  .label { position: absolute; inset: 0; display: grid; place-content: center; gap: 6px; pointer-events: none; }
-  .phase { font-size: 22px; font-weight: 600; letter-spacing: .04em; }
-  .count { font-size: 56px; font-weight: 300; line-height: 1; font-variant-numeric: tabular-nums; }
+  .label { position: absolute; inset: 0; display: grid; place-content: center; gap: 8px; pointer-events: none; color: var(--on); }
+  .phase { font-size: 15px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; opacity: .85; }
+  .count { font-size: 64px; font-weight: 200; line-height: 1; font-variant-numeric: tabular-nums; }
 
   .meta { display: flex; gap: 32px; color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; }
 
   button {
-    font: inherit; font-size: 14px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
-    border: 2px solid var(--fg); background: none; color: var(--fg);
-    padding: 10px 28px; cursor: pointer; border-radius: 0;
+    font: inherit; font-size: 14px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+    border: 0; background: var(--fg); color: var(--bg);
+    padding: 12px 32px; cursor: pointer; border-radius: 0;
   }
-  button:hover, button:focus-visible { background: var(--fg); color: var(--bg); outline: none; }
+  button:hover, button:focus-visible { opacity: .85; outline: none; }
 
   .hint { color: var(--muted); font-size: 14px; }
 
-  @media (prefers-reduced-motion: reduce) { .fill { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .box { box-shadow: none; } }
 </style>
 </head>
 <body>
@@ -59,10 +65,8 @@
   <h1>Box breathing · 3 minutes</h1>
 
   <div class="box" id="box" title="Click to start or pause">
-    <svg viewBox="0 0 100 100" role="img" aria-label="A square; a dot travels one edge per breath phase">
-      <rect class="fill" x="0" y="0" width="100" height="100"/>
-      <rect class="frame" x="0" y="0" width="100" height="100"/>
-      <circle class="dot" id="dot" cx="0" cy="0" r="4"/>
+    <svg viewBox="0 0 100 100" role="img" aria-label="A square of light; it brightens as you inhale, dims as you exhale; a dot travels one edge per phase">
+      <circle class="dot" id="dot" cx="0" cy="0" r="3"/>
     </svg>
     <div class="label" aria-live="polite">
       <div class="phase" id="phase">Ready</div>
@@ -88,7 +92,9 @@
   const TOTAL = CYCLE * ROUNDS;
 
   const $ = id => document.getElementById(id);
-  const dot = $('dot'), fill = document.querySelector('.fill');
+  const dot = $('dot');
+  const css = getComputedStyle(document.documentElement);
+  const L0 = +css.getPropertyValue('--l0'), L1 = +css.getPropertyValue('--l1');
   const phaseEl = $('phase'), countEl = $('count'), roundEl = $('round'), leftEl = $('left');
   const btn = $('btn'), box = $('box');
 
@@ -107,7 +113,12 @@
     else              { cx = 0;             cy = 100 - f * 100; } // left, up
     dot.setAttribute('cx', cx);
     dot.setAttribute('cy', cy);
-    fill.style.setProperty('--s', p === 0 ? f : p === 1 ? 1 : p === 2 ? 1 - f : 0);
+    // the light breathes: up on inhale, held, down on exhale, held
+    const b = p === 0 ? f : p === 1 ? 1 : p === 2 ? 1 - f : 0;
+    const ease = b * b * (3 - 2 * b);
+    box.style.setProperty('--l', L0 + (L1 - L0) * ease);
+    // and its hue drifts over the session: blue → violet → rose → back to blue
+    box.style.setProperty('--h', 215 + 110 * (0.5 - 0.5 * Math.cos(2 * Math.PI * t / TOTAL)));
     phaseEl.textContent = PHASES[p];
     countEl.textContent = Math.min(PHASE, Math.floor(f * PHASE) + 1);
     roundEl.textContent = `Round ${Math.min(ROUNDS, Math.floor(t / CYCLE) + 1)} / ${ROUNDS}`;
@@ -142,7 +153,7 @@
     running = false;
     elapsed = TOTAL;
     dot.setAttribute('cx', 0); dot.setAttribute('cy', 0);
-    fill.style.setProperty('--s', 0);
+    box.style.setProperty('--l', L0); box.style.setProperty('--h', 215);
     phaseEl.textContent = 'Done';
     countEl.textContent = '·';
     roundEl.textContent = `Round ${ROUNDS} / ${ROUNDS}`;
