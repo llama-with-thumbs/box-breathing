@@ -14,6 +14,9 @@
     --on: #ffffff;          /* text on the light */
     --l0: 48; --l1: 64;     /* lightness of the light: exhaled, inhaled */
     --glow: .35;
+    --h: 215;               /* hue of the light; drifts over the session */
+    --light: hsl(var(--h) 60% 44%);
+    --ink: hsl(var(--h) 70% 72%);
   }
   @media (prefers-color-scheme: dark) {
     :root { --bg: #0b0c10; --fg: #ece9e2; --muted: #8a877f; --l0: 26; --l1: 44; --glow: .6; }
@@ -35,7 +38,7 @@
 
   .box {
     position: relative; width: min(72vw, 300px); aspect-ratio: 1; cursor: pointer; user-select: none;
-    --h: 215; --l: var(--l0);
+    --l: var(--l0);
     background: hsl(var(--h) 60% calc(var(--l) * 1%));
     box-shadow: 0 0 90px hsl(var(--h) 60% calc(var(--l) * 1%) / var(--glow));
   }
@@ -56,6 +59,21 @@
   button:hover, button:focus-visible { opacity: .85; outline: none; }
 
   .hint { color: var(--muted); font-size: 14px; }
+
+  .row { display: flex; gap: 20px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  /* sound switch: a small square of light, the word lit by it */
+  .snd { display: inline-flex; align-items: center; gap: 12px; padding: 8px 4px; min-height: 44px; background: none; border: 0; color: var(--muted); letter-spacing: .1em; }
+  .snd:hover, .snd:focus-visible { opacity: 1; outline: none; }
+  .snd:focus-visible .sq { outline: 2px solid var(--fg); outline-offset: 3px; }
+  .snd .sq { display: block; width: 18px; height: 18px; border: 2px solid var(--fg); box-sizing: border-box; transition: background .4s, border-color .4s, box-shadow .4s, transform .15s; }
+  .snd:active .sq { transform: scale(.85); }
+  .snd[aria-pressed="true"] .sq { background: var(--light); border-color: var(--light); box-shadow: 0 0 16px var(--light); }
+  .snd .word { display: inline-grid; grid-auto-flow: column; align-items: baseline; transition: color .5s, text-shadow .5s; }
+  .snd .word > :first-child { grid-area: 1 / 1; white-space: pre; }
+  .snd .on, .snd .off { grid-area: 1 / 2; visibility: hidden; }
+  .snd[aria-pressed="true"] .on { visibility: visible; }
+  .snd[aria-pressed="false"] .off { visibility: visible; }
+  .snd[aria-pressed="true"] .word { color: var(--ink); text-shadow: 0 0 12px hsl(var(--h) 80% 60% / .7); }
 
   @media (prefers-reduced-motion: reduce) { .box { box-shadow: none; } }
 </style>
@@ -79,8 +97,11 @@
     <span id="left">2:08</span>
   </div>
 
-  <button id="btn" type="button">Start</button>
-  <p class="hint">Inhale 4 · Hold 4 · Exhale 4 · Hold 4. Space starts or pauses.</p>
+  <div class="row">
+    <button id="btn" type="button">Start</button>
+    <button id="snd" type="button" class="snd" aria-pressed="true"><span class="sq"></span><span class="word"><span>Sound </span><span class="on">on</span><span class="off">off</span></span></button>
+  </div>
+  <p class="hint">Inhale 4 · Hold 4 · Exhale 4 · Hold 4. Space starts or pauses. The tone rises as you breathe in.</p>
 </main>
 
 <script>
@@ -99,6 +120,67 @@
   const btn = $('btn'), box = $('box');
 
   let running = false, elapsed = 0, last = 0, raf = 0;
+  const root = document.documentElement;
+
+  // ---- sound: made here, no files. Nothing plays before a tap. One setting for all instruments. ----
+  let ctx = null, sound = true;
+  try { sound = localStorage.getItem('instruments.sound') !== 'off'; } catch (e) {}
+  const sndBtn = $('snd');
+  const showSound = () => sndBtn.setAttribute('aria-pressed', String(sound));
+  showSound();
+  const audio = () => {
+    if (!sound) return null;
+    try {
+      if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+      if (ctx.state === 'suspended') ctx.resume();
+      return ctx;
+    } catch (e) { return null; }
+  };
+  // a soft thump: a short low knock, pitch falling, no click
+  function thump() {
+    const c = audio(); if (!c) return;
+    const t = c.currentTime, o = c.createOscillator(), g = c.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(90, t);
+    o.frequency.exponentialRampToValueAtTime(45, t + 0.1);
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(0.5, t + 0.008);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+    o.connect(g).connect(c.destination);
+    o.start(t); o.stop(t + 0.22);
+  }
+  sndBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    sound = !sound; showSound();
+    try { localStorage.setItem('instruments.sound', sound ? 'on' : 'off'); } catch (e) {}
+    if (sound) thump(); else toneOff();
+  });
+
+  // the tone: one low pure sine with a quiet fifth, no attack. Pitch follows the breath.
+  let osc1 = null, osc2 = null, gain = null;
+  function toneOn() {
+    const c = audio(); if (!c || osc1) return;
+    gain = c.createGain(); gain.gain.setValueAtTime(0, c.currentTime);
+    gain.gain.linearRampToValueAtTime(0.09, c.currentTime + 2);
+    osc1 = c.createOscillator(); osc1.type = 'sine'; osc1.frequency.value = 110;
+    osc2 = c.createOscillator(); osc2.type = 'sine'; osc2.frequency.value = 165;
+    const g2 = c.createGain(); g2.gain.value = 0.35;
+    osc1.connect(gain); osc2.connect(g2).connect(gain); gain.connect(c.destination);
+    osc1.start(); osc2.start();
+  }
+  function tonePitch(b) {                       // b: 0 exhaled .. 1 inhaled -> up to two semitones
+    if (!osc1) return;
+    const f = 110 * Math.pow(2, b * 2 / 12);
+    osc1.frequency.setTargetAtTime(f, ctx.currentTime, 0.1);
+    osc2.frequency.setTargetAtTime(f * 1.5, ctx.currentTime, 0.1);
+  }
+  function toneOff() {
+    if (!osc1) return;
+    const o1 = osc1, o2 = osc2, g = gain, t = ctx.currentTime; osc1 = osc2 = gain = null;
+    g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value, t);
+    g.gain.linearRampToValueAtTime(0, t + 1.5);
+    o1.stop(t + 1.6); o2.stop(t + 1.6);
+  }
 
   // Keep the phone's screen on while the timer runs (Android Chrome/Firefox, HTTPS).
   // Released on pause, finish, or when the tab is hidden. Nothing happens if unsupported.
@@ -125,8 +207,9 @@
     const b = p === 0 ? f : p === 1 ? 1 : p === 2 ? 1 - f : 0;
     const ease = b * b * (3 - 2 * b);
     box.style.setProperty('--l', L0 + (L1 - L0) * ease);
+    tonePitch(ease);
     // and its hue drifts over the session: blue → violet → rose → back to blue
-    box.style.setProperty('--h', 215 + 110 * (0.5 - 0.5 * Math.cos(2 * Math.PI * t / TOTAL)));
+    root.style.setProperty('--h', 215 + 110 * (0.5 - 0.5 * Math.cos(2 * Math.PI * t / TOTAL)));
     phaseEl.textContent = PHASES[p];
     countEl.textContent = Math.min(PHASE, Math.floor(f * PHASE) + 1);
     roundEl.textContent = `Round ${Math.min(ROUNDS, Math.floor(t / CYCLE) + 1)} / ${ROUNDS}`;
@@ -148,6 +231,7 @@
     last = performance.now();
     btn.textContent = 'Pause';
     keepAwake();
+    toneOn();
     raf = requestAnimationFrame(tick);
   }
 
@@ -155,6 +239,7 @@
     running = false;
     cancelAnimationFrame(raf);
     letSleep();
+    toneOff();
     btn.textContent = elapsed > 0 ? 'Resume' : 'Start';
     phaseEl.textContent = 'Paused';
   }
@@ -162,9 +247,10 @@
   function finish() {
     running = false;
     letSleep();
+    toneOff();
     elapsed = TOTAL;
     dot.setAttribute('cx', 0); dot.setAttribute('cy', 0);
-    box.style.setProperty('--l', L0); box.style.setProperty('--h', 215);
+    box.style.setProperty('--l', L0); root.style.setProperty('--h', 215);
     phaseEl.textContent = 'Done';
     countEl.textContent = '·';
     roundEl.textContent = `Round ${ROUNDS} / ${ROUNDS}`;

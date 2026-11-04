@@ -16,6 +16,7 @@
   @media (prefers-color-scheme: dark) {
     :root { --bg: #141414; --fg: #f0ece4; --accent: #e4553f; --muted: #8c877d; }
   }
+  :root { --h: 215; --light: hsl(var(--h) 60% 44%); --ink: hsl(var(--h) 70% 72%); }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
   body {
@@ -47,9 +48,21 @@
     border: 2px solid var(--fg); padding: 10px 28px; cursor: pointer;
   }
   button:hover, button:focus-visible { background: var(--fg); color: var(--bg); outline: none; }
-  .row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-  button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
-  button[aria-pressed="true"]:hover, button[aria-pressed="true"]:focus-visible { background: none; color: var(--fg); }
+
+  .row { display: flex; gap: 20px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  /* sound switch: a small square of light, the word lit by it */
+  .snd { display: inline-flex; align-items: center; gap: 12px; padding: 8px 4px; min-height: 44px; background: none; border: 0; color: var(--muted); letter-spacing: .1em; }
+  .snd:hover, .snd:focus-visible { opacity: 1; outline: none; }
+  .snd:focus-visible .sq { outline: 2px solid var(--fg); outline-offset: 3px; }
+  .snd .sq { display: block; width: 18px; height: 18px; border: 2px solid var(--fg); box-sizing: border-box; transition: background .4s, border-color .4s, box-shadow .4s, transform .15s; }
+  .snd:active .sq { transform: scale(.85); }
+  .snd[aria-pressed="true"] .sq { background: var(--light); border-color: var(--light); box-shadow: 0 0 16px var(--light); }
+  .snd .word { display: inline-grid; grid-auto-flow: column; align-items: baseline; transition: color .5s, text-shadow .5s; }
+  .snd .word > :first-child { grid-area: 1 / 1; white-space: pre; }
+  .snd .on, .snd .off { grid-area: 1 / 2; visibility: hidden; }
+  .snd[aria-pressed="true"] .on { visibility: visible; }
+  .snd[aria-pressed="false"] .off { visibility: visible; }
+  .snd[aria-pressed="true"] .word { color: var(--ink); text-shadow: 0 0 12px hsl(var(--h) 80% 60% / .7); }
 
 
   .hint { color: var(--muted); font-size: 14px; }
@@ -79,7 +92,7 @@
 
   <div class="row">
     <button id="btn" type="button">Begin</button>
-    <button id="mute" type="button" aria-pressed="true">Sound on</button>
+    <button id="snd" type="button" class="snd" aria-pressed="true"><span class="sq"></span><span class="word"><span>Sound </span><span class="on">on</span><span class="off">off</span></span></button>
   </div>
   <p class="hint">Move on when you are ready. Nothing moves you. Space works too.</p>
 </main>
@@ -104,7 +117,7 @@
   const $ = id => document.getElementById(id);
   const inner = $('inner'), partEl = $('part'), askEl = $('ask');
   const whereEl = $('where'), leftEl = $('left'), btn = $('btn'), box = $('box');
-  const muteBtn = $('mute');
+  const root = document.documentElement;
 
   let step = -1;          // -1 ready, 0..N-1 in a step, N done
   let inStep = 0;         // seconds in the current step
@@ -124,22 +137,41 @@
 
   const fmt = s => { s = Math.max(0, Math.ceil(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
 
-  // ---- sound: made here, no files. Nothing plays before the first tap. ----
-  let ctx = null;
-  let sound = true;
-  try { sound = localStorage.getItem('unclench.sound') !== 'off'; } catch (e) {}
-  const showSound = () => { muteBtn.textContent = sound ? 'Sound on' : 'Sound off'; muteBtn.setAttribute('aria-pressed', String(sound)); };
+
+  // ---- sound: made here, no files. Nothing plays before a tap. One setting for all instruments. ----
+  let ctx = null, sound = true;
+  try { sound = localStorage.getItem('instruments.sound') !== 'off'; } catch (e) {}
+  const sndBtn = $('snd');
+  const showSound = () => sndBtn.setAttribute('aria-pressed', String(sound));
   showSound();
-  muteBtn.addEventListener('click', () => {
-    sound = !sound; showSound();
-    try { localStorage.setItem('unclench.sound', sound ? 'on' : 'off'); } catch (e) {}
-  });
   const audio = () => {
     if (!sound) return null;
-    if (!ctx) { try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return null; } }
-    if (ctx.state === 'suspended') ctx.resume();
-    return ctx;
+    try {
+      if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+      if (ctx.state === 'suspended') ctx.resume();
+      return ctx;
+    } catch (e) { return null; }
   };
+  // a soft thump: a short low knock, pitch falling, no click
+  function thump() {
+    const c = audio(); if (!c) return;
+    const t = c.currentTime, o = c.createOscillator(), g = c.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(90, t);
+    o.frequency.exponentialRampToValueAtTime(45, t + 0.1);
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(0.5, t + 0.008);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+    o.connect(g).connect(c.destination);
+    o.start(t); o.stop(t + 0.22);
+  }
+  sndBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    sound = !sound; showSound();
+    try { localStorage.setItem('instruments.sound', sound ? 'on' : 'off'); } catch (e) {}
+    if (sound) thump(); else toneOff();
+  });
+  function toneOff() {}                       // nothing sustained on this page
   // One soft low tone: "the time has passed, if you want".
   function ping() {
     const c = audio(); if (!c) return;
@@ -196,6 +228,7 @@
     const f = Math.min(1, inStep / s.secs);
     inner.style.setProperty('--s', sizeAt(step) + (sizeAt(step + 1) - sizeAt(step)) * f);
     leftEl.textContent = fmt(TOTAL - spent - Math.min(inStep, s.secs));
+    root.style.setProperty('--h', 215 + 110 * (0.5 - 0.5 * Math.cos(2 * Math.PI * (spent + Math.min(inStep, s.secs)) / TOTAL)));
     if (s.breath) breathText(s);
     if (f >= 1 && !rang) { rang = true; if (!s.breath) ping(); }
     raf = requestAnimationFrame(tick);
@@ -232,6 +265,7 @@
 
   function reset() {
     inner.style.setProperty('--s', SIZE0);
+    root.style.setProperty('--h', 215);
     partEl.textContent = 'Ready';
     askEl.textContent = 'Put the day down for two minutes.';
     whereEl.textContent = `Step 0 / ${N}`;
