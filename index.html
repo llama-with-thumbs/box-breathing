@@ -59,6 +59,9 @@
   button:hover, button:focus-visible { opacity: .85; outline: none; }
 
   .hint { color: var(--muted); font-size: 14px; }
+  /* the way to the other instrument: one grey word, last on the page */
+  .x { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 8px; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
+  .x:hover, .x:focus-visible { color: var(--fg); outline: none; }
 
   .row { display: flex; gap: 20px; align-items: center; justify-content: center; flex-wrap: wrap; }
   /* sound switch: a small square of light, the word lit by it */
@@ -102,6 +105,7 @@
     <button id="snd" type="button" class="snd" aria-pressed="true"><span class="sq"></span><span class="word"><span>Sound </span><span class="on">on</span><span class="off">off</span></span></button>
   </div>
   <p class="hint">Inhale 4 · Hold 4 · Exhale 4 · Hold 4. Space starts or pauses. The tone rises as you breathe in.</p>
+  <a class="x" href="unclench.html">Unclench →</a>
 </main>
 
 <script>

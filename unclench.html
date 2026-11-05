@@ -66,6 +66,9 @@
 
 
   .hint { color: var(--muted); font-size: 14px; }
+  /* the way to the other instrument: one grey word, last on the page */
+  .x { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 8px; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
+  .x:hover, .x:focus-visible { color: var(--fg); outline: none; }
 
   @media (prefers-reduced-motion: reduce) { .inner { transition: none; } }
 </style>
@@ -95,6 +98,7 @@
     <button id="snd" type="button" class="snd" aria-pressed="true"><span class="sq"></span><span class="word"><span>Sound </span><span class="on">on</span><span class="off">off</span></span></button>
   </div>
   <p class="hint">Move on when you are ready. Nothing moves you. Space works too.</p>
+  <a class="x" href="index.html">← Box breathing</a>
 </main>
 
 <script>
