@@ -37,7 +37,7 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   No text input: Vlad asked for nothing to type.
 - Sound switch on both pages: a small lit square + "Sound on/off" (word lit by the square,
   width-stable), thump on press-on, one shared `localStorage` key `instruments.sound`.
-  `index.html` also plays a low tone that rises on inhale. Hue `--h` drifts on both pages.
+  `index.html` also plays a low tone (220 Hz + its octave at 0.4, not a fifth: a fifth buzzes on a phone speaker) that rises one semitone on inhale. Hue `--h` drifts on both pages.
 - Cross link: one grey word under the hint on each page (`.x`), chosen from six mocks
   (gallery artifact https://claude.ai/artifact/URBYeBMrWPFSUtqTjZtvZk).
 - Two recorded clicks are embedded in the pages as base64 8 kHz WAV (`sounds/`): `switch.wav`
