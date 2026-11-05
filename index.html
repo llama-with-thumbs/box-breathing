@@ -145,10 +145,10 @@
     const c = audio(); if (!c) return;
     const t = c.currentTime, o = c.createOscillator(), g = c.createGain();
     o.type = 'sine';
-    o.frequency.setValueAtTime(90, t);
-    o.frequency.exponentialRampToValueAtTime(45, t + 0.1);
+    o.frequency.setValueAtTime(180, t);
+    o.frequency.exponentialRampToValueAtTime(90, t + 0.1);
     g.gain.setValueAtTime(0, t);
-    g.gain.linearRampToValueAtTime(0.8, t + 0.008);
+    g.gain.linearRampToValueAtTime(0.95, t + 0.008);
     g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
     o.connect(g).connect(c.destination);
     o.start(t); o.stop(t + 0.22);
@@ -165,16 +165,16 @@
   function toneOn() {
     const c = audio(); if (!c || osc1) return;
     gain = c.createGain(); gain.gain.setValueAtTime(0, c.currentTime);
-    gain.gain.linearRampToValueAtTime(0.25, c.currentTime + 2);
-    osc1 = c.createOscillator(); osc1.type = 'sine'; osc1.frequency.value = 110;
-    osc2 = c.createOscillator(); osc2.type = 'sine'; osc2.frequency.value = 165;
+    gain.gain.linearRampToValueAtTime(0.45, c.currentTime + 2);
+    osc1 = c.createOscillator(); osc1.type = 'sine'; osc1.frequency.value = 220;
+    osc2 = c.createOscillator(); osc2.type = 'sine'; osc2.frequency.value = 330;
     const g2 = c.createGain(); g2.gain.value = 0.6;
     osc1.connect(gain); osc2.connect(g2).connect(gain); gain.connect(c.destination);
     osc1.start(); osc2.start();
   }
   function tonePitch(b) {                       // b: 0 exhaled .. 1 inhaled -> up to two semitones
     if (!osc1) return;
-    const f = 110 * Math.pow(2, b * 2 / 12);
+    const f = 220 * Math.pow(2, b * 2 / 12);
     osc1.frequency.setTargetAtTime(f, ctx.currentTime, 0.1);
     osc2.frequency.setTargetAtTime(f * 1.5, ctx.currentTime, 0.1);
   }
