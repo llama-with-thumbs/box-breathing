@@ -30,8 +30,9 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   the session, white dot walks the edge. Waking Up gave: air, light type, one filled button.
 
 - `unclench.html`: 6 steps with suggested seconds (`STEPS`), total 120 s. The square
-  grows from `SIZE0` to 1 over the step's time, then waits; only a tap advances.
-  Sound is Web Audio (220 Hz ping when a step's time is up; 330→165 Hz slide on
+  grows from `SIZE0` to 1 over the step's time; when it is up a ping sounds and the next step
+  starts by itself (Vlad, 5 Nov); a tap moves on early.
+  Sound is Web Audio (220 Hz ping at each step change; 330→165 Hz slide on
   each exhale), on by default, mute remembered in `localStorage` `unclench.sound`.
   No text input: Vlad asked for nothing to type.
 - Sound switch on both pages: a small lit square + "Sound on/off" (word lit by the square,

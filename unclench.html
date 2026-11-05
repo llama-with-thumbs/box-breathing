@@ -97,14 +97,14 @@
     <button id="btn" type="button">Begin</button>
     <button id="snd" type="button" class="snd" aria-pressed="true"><span class="sq"></span><span class="word"><span>Sound </span><span class="on">on</span><span class="off">off</span></span></button>
   </div>
-  <p class="hint">Move on when you are ready. Nothing moves you. Space works too.</p>
+  <p class="hint">A ping marks each step. Tap to move on early. Space works too.</p>
   <a class="x" href="index.html">← Box breathing</a>
 </main>
 
 <script>
 (() => {
   // Each step: a body part, one small request, a suggested time in seconds.
-  // The square grows during that time; then it waits. Only a tap moves on.
+  // The square grows during that time; when it is up, a ping, and the next step. A tap moves on early.
   const STEPS = [
     { part: 'Feet',      ask: 'Feel the floor under them.',           secs: 20 },
     { part: 'Jaw',       ask: 'Let it drop a little.',                 secs: 15 },
@@ -249,7 +249,7 @@
     leftEl.textContent = fmt(TOTAL - spent - Math.min(inStep, s.secs));
     root.style.setProperty('--h', 215 + 110 * (0.5 - 0.5 * Math.cos(2 * Math.PI * (spent + Math.min(inStep, s.secs)) / TOTAL)));
     if (s.breath) breathText(s);
-    if (f >= 1 && !rang) { rang = true; if (!s.breath) ping(); }
+    if (f >= 1 && !rang) { rang = true; ping(); next(); if (!running) return; }   // time is up: the cue, then on
     raf = requestAnimationFrame(tick);
   }
 
