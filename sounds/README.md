@@ -1,6 +1,8 @@
 # Sounds
 
-Five recorded clicks live inside the pages as base64 WAV (8 kHz, mono, 16-bit), so each page stays one file that works offline.
+**Not in the pages any more (5 Nov 2026):** on the Galaxy S22 the clicks read as buzz and distortion; Vlad asked for them out. Kept here with the recipe for later.
+
+Five recorded clicks were embedded in the pages as base64 WAV (8 kHz, mono, 16-bit), so each page stayed one file that works offline.
 
 | File | Used for | Where it came from |
 | --- | --- | --- |

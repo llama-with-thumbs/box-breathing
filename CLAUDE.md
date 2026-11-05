@@ -36,25 +36,23 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   each exhale), on by default, mute remembered in `localStorage` `unclench.sound`.
   No text input: Vlad asked for nothing to type.
 - Sound switch on both pages: a small lit square + "Sound on/off" (word lit by the square,
-  width-stable), thump on press-on, one shared `localStorage` key `instruments.sound`.
+  width-stable), silent on press, one shared `localStorage` key `instruments.sound`.
   `index.html` also plays a low tone (220 Hz + its octave at 0.4, not a fifth: a fifth buzzes on a phone speaker) that rises one semitone on inhale. Hue `--h` drifts on both pages.
 - Cross link: one grey word under the hint on each page (`.x`), chosen from six mocks
   (gallery artifact https://claude.ai/artifact/URBYeBMrWPFSUtqTjZtvZk).
-- Two recorded clicks are embedded in the pages as base64 8 kHz WAV (`sounds/`): `switch.wav`
-  plays on every press of the sound switch (on and off, both pages, ignores the setting);
-  `corner1-4.wav` play on `index.html`, one per corner (the same click at 8.0x/7.3x/8.6x/9.3x slow,
-  about a semitone apart; `lastSide`); no click at Start, Vlad heard it as distortion (5 Nov). The tone ducks to 30 % under any click (`duck()`): tone + click
-  clipped before, heard as a buzz. The synthetic thump is gone. Recipe: `sounds/README.md`, `sounds/recipe/`.
+- No clicks. Recorded clicks (switch press, each corner) were in the pages for a day on 5 Nov; on the S22
+  they read as buzz and distortion, and Vlad asked for them out. The tone (220 Hz + octave) and Unclench's
+  ping/slide stay. The recipe for the clicks is kept in `sounds/` for later.
 
 ## State as of 4 Nov 2026
 
 Live at https://llama-with-thumbs.github.io/box-breathing/ and /unclench.html: cross links, recorded
-clicks (sounds/), four corner clicks with the tone ducking under them (5 Nov). Gallery of corner siblings
+clicks (sounds/), then the clicks taken out again (5 Nov). Gallery of corner siblings
 (set A shipped, set B brightness variants): https://claude.ai/artifact/ULgCLzEArHa5uBv1Eev4dc. Vlad confirmed the wake lock on his Android. Sound switch #6, thump and breath
 tone verified in Chrome on the live URLs. Local test server, if needed: `python -m http.server 8771`
 (8765 is taken by the materials project); none running now.
 
 ## Next step
 
-Vlad checks on the S22 whether the buzz is gone (if it is still there and continuous, not at the corners, it is the speaker rattling at 220 Hz: raise the tone an octave). Set B of the corner siblings is an alternative. `unclench.html` still has the red square and
+Vlad checks the tone on the S22 (now 220 + octave; options T2-T6 at https://claude.ai/artifact/Ju8UShdZLE68CDLzvRM213). `unclench.html` still has the red square and
 outlined frame; the Turrell/Waking Up pass for it is offered, not decided.
