@@ -41,17 +41,19 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   (gallery artifact https://claude.ai/artifact/URBYeBMrWPFSUtqTjZtvZk).
 - Two recorded clicks are embedded in the pages as base64 8 kHz WAV (`sounds/`): `switch.wav`
   plays on every press of the sound switch (on and off, both pages, ignores the setting);
-  `corner.wav` plays on `index.html` each time the dot reaches a corner (`lastSide`). The synthetic
-  thump is gone. Recipe and all earlier rounds: `sounds/README.md` and `sounds/recipe/`.
+  `corner1-4.wav` play on `index.html`, one per corner (the same click at 8.0x/7.3x/8.6x/9.3x slow,
+  about a semitone apart; `lastSide`). The tone ducks to 30 % under any click (`duck()`): tone + click
+  clipped before, heard as a buzz. The synthetic thump is gone. Recipe: `sounds/README.md`, `sounds/recipe/`.
 
 ## State as of 4 Nov 2026
 
-Live at https://llama-with-thumbs.github.io/box-breathing/ and /unclench.html, commit a2f5da6
-(cross links), then recorded clicks in the pages (sounds/). Vlad confirmed the wake lock on his Android. Sound switch #6, thump and breath
+Live at https://llama-with-thumbs.github.io/box-breathing/ and /unclench.html: cross links, recorded
+clicks (sounds/), four corner clicks with the tone ducking under them (5 Nov). Gallery of corner siblings
+(set A shipped, set B brightness variants): https://claude.ai/artifact/ULgCLzEArHa5uBv1Eev4dc. Vlad confirmed the wake lock on his Android. Sound switch #6, thump and breath
 tone verified in Chrome on the live URLs. Local test server, if needed: `python -m http.server 8771`
 (8765 is taken by the materials project); none running now.
 
 ## Next step
 
-Vlad tries the cross link and the tone on his phone. `unclench.html` still has the red square and
+Vlad checks on the S22 whether the buzz is gone (if it is still there and continuous, not at the corners, it is the speaker rattling at 220 Hz: raise the tone an octave). Set B of the corner siblings is an alternative. `unclench.html` still has the red square and
 outlined frame; the Turrell/Waking Up pass for it is offered, not decided.

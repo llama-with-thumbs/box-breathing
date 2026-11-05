@@ -1,11 +1,11 @@
 # Sounds
 
-Two recorded clicks live inside the pages as base64 WAV (8 kHz, mono, 16-bit), so each page stays one file that works offline.
+Five recorded clicks live inside the pages as base64 WAV (8 kHz, mono, 16-bit), so each page stays one file that works offline.
 
 | File | Used for | Where it came from |
 | --- | --- | --- |
 | `switch.wav` (0.18 s, 3 KB) | the sound switch, on and off, both pages | clicks 5+6 of `source/voice-030.m4a`, hum removed, slowed 4x, nothing above 400 Hz, first 150 ms under 180 Hz |
-| `corner.wav` (0.4 s, 6 KB) | `index.html`, each time the dot reaches a corner | the same pair, slowed 8x, nothing above 500 Hz, first 200 ms under 180 Hz |
+| `corner1.wav` … `corner4.wav` (0.36-0.44 s, 6-7 KB each) | `index.html`, one per corner: inhale starts, top, exhale starts, bottom | the same pair slowed 8.0x, 7.3x, 8.6x, 9.3x (so each sits about a semitone from the next), nothing above 500 Hz, the first 200 ms under 180 Hz |
 
 Both are heard on laptop speakers and a Galaxy S22, so nothing in them relies on frequencies under about 180 Hz.
 
@@ -16,8 +16,11 @@ Python with numpy + scipy (`python -m pip install numpy scipy`); ffmpeg decodes 
 1. `ffmpeg -i source/voice-030.m4a -ac 1 -ar 44100 in.wav`
 2. `clean3.py` finds the clicks (2 ms frames, a frame 2.2x the 40 ms before it), keeps each from 6 ms before its edge until it has died back, and subtracts the hum (median spectrum of everything between the clicks, 2.5x, floor 4 %). Writes `x-k1..9.wav`.
 3. `pair56.py` lays clicks 5 and 6 40 ms apart as recorded (`p-56.wav`) and slows the pair with `resample_poly` (pitch drops with it, like a slowed recording).
-4. `pair56b.py` cuts the highs and holds the first part of the sound even lower so the start has no bright edge. Writes `q-4b.wav` and `q-8b.wav`.
-5. `embed.py` trims, resamples to 8 kHz and base64-encodes them; `apply_clicks.py` puts them into the pages.
+4. `pair56b.py` cuts the highs and holds the first part of the sound even lower so the start has no bright edge. Writes `q-4b.wav` (the switch) and `q-8b.wav`.
+5. `pair56c.py` makes four siblings of `q-8b`: set A at 8.0x/7.3x/8.6x/9.3x (shipped), set B at 8x with the top edge at 420/500/580/680 Hz (gallery only).
+6. `embed.py` / `embed4.py` trim, resample to 8 kHz and base64-encode; `apply_clicks.py` / `apply4.py` put them into the pages.
+
+In `index.html` the tone ducks to 30 % while any click sounds (`duck()`): tone 0.72 + click 0.71 would clip at every corner, which was heard as a buzz.
 
 The earlier rounds are here too, for more variations later:
 

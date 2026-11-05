@@ -1,0 +1,55 @@
+{
+ "title": "Corner Siblings",
+ "h1": "corner click \u00b7 four siblings",
+ "out": "corner-siblings.html",
+ "vars": [
+  [
+   "c-a1",
+   "A1 \u00b7 8.0\u00d7 (= 8b)",
+   "The corner click as it is now. Inhale starts.",
+   "A1"
+  ],
+  [
+   "c-a2",
+   "A2 \u00b7 7.3\u00d7, a little higher",
+   "Top of the inhale.",
+   "A2"
+  ],
+  [
+   "c-a3",
+   "A3 \u00b7 8.6\u00d7, a little lower",
+   "Exhale starts.",
+   "A3"
+  ],
+  [
+   "c-a4",
+   "A4 \u00b7 9.3\u00d7, lower still",
+   "Bottom of the exhale.",
+   "A4"
+  ],
+  [
+   "c-b1",
+   "B1 \u00b7 to 500 Hz (= 8b)",
+   "Same speed for all four of B; only the top edge moves. Inhale starts.",
+   "B1"
+  ],
+  [
+   "c-b2",
+   "B2 \u00b7 to 420 Hz, duller",
+   "Top of the inhale.",
+   "B2"
+  ],
+  [
+   "c-b3",
+   "B3 \u00b7 to 580 Hz, a touch brighter",
+   "Exhale starts.",
+   "B3"
+  ],
+  [
+   "c-b4",
+   "B4 \u00b7 to 680 Hz, brightest",
+   "Bottom of the exhale.",
+   "B4"
+  ]
+ ]
+}
