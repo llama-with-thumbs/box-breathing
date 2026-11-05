@@ -104,7 +104,7 @@
     <button id="btn" type="button">Start</button>
     <button id="snd" type="button" class="snd" aria-pressed="true"><span class="sq"></span><span class="word"><span>Sound </span><span class="on">on</span><span class="off">off</span></span></button>
   </div>
-  <p class="hint">Inhale 4 · Hold 4 · Exhale 4 · Hold 4. Space starts or pauses. The tone rises as you breathe in; a click marks each corner.</p>
+  <p class="hint">Inhale 4 · Hold 4 · Exhale 4 · Hold 4. Space starts or pauses. A click marks each corner.</p>
   <a class="x" href="unclench.html">Unclench →</a>
 </main>
 
@@ -126,7 +126,7 @@
   let running = false, elapsed = 0, last = 0, raf = 0, lastSide = -1;
   const root = document.documentElement;
 
-  // ---- sound: a tone made here, two clicks recorded. Nothing plays before a tap. One setting for all instruments. ----
+  // ---- sound: two recorded clicks, nothing sustained. Nothing plays before a tap. One setting for all instruments. ----
   let ctx = null, sound = true;
   try { sound = localStorage.getItem('instruments.sound') !== 'off'; } catch (e) {}
   const sndBtn = $('snd');
@@ -154,7 +154,7 @@
   };
   function play(key, b64, gain, always) {
     const c = always ? anyAudio() : audio(); if (!c) return;
-    const go = buf => { const s = c.createBufferSource(), g = c.createGain(); s.buffer = buf; g.gain.value = gain; s.connect(g).connect(c.destination); duck(Math.min(0.5, buf.duration)); s.start(); };   // the duck covers the hit, not the room tail
+    const go = buf => { const s = c.createBufferSource(), g = c.createGain(); s.buffer = buf; g.gain.value = gain; s.connect(g).connect(c.destination); s.start(); };
     if (bufs[key]) return go(bufs[key]);
     const bin = atob(b64), arr = new Uint8Array(bin.length);
     for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
@@ -178,38 +178,7 @@
     switchClick(); if (!sound) toneOff();
   });
 
-  // the tone: a low sine with its octave under it, no attack. An octave pair, not a fifth: a fifth pulses at
-  // the difference (110 Hz), which a phone speaker turns into buzz. Pitch follows the breath, one semitone, slowly.
-  let osc1 = null, osc2 = null, gain = null, dip = null;
-  function toneOn() {
-    const c = audio(); if (!c || osc1) return;
-    gain = c.createGain(); gain.gain.setValueAtTime(0, c.currentTime);
-    gain.gain.linearRampToValueAtTime(0.45, c.currentTime + 2);
-    osc1 = c.createOscillator(); osc1.type = 'sine'; osc1.frequency.value = 220;
-    osc2 = c.createOscillator(); osc2.type = 'sine'; osc2.frequency.value = 440;
-    const g2 = c.createGain(); g2.gain.value = 0.4;
-    dip = c.createGain();                       // the tone steps aside while a click sounds; together they would clip
-    osc1.connect(gain); osc2.connect(g2).connect(gain); gain.connect(dip).connect(c.destination);
-    osc1.start(); osc2.start();
-  }
-  function tonePitch(b) {                       // b: 0 exhaled .. 1 inhaled -> up to one semitone
-    if (!osc1) return;
-    const f = 220 * Math.pow(2, b / 12);
-    osc1.frequency.setTargetAtTime(f, ctx.currentTime, 0.3);
-    osc2.frequency.setTargetAtTime(f * 2, ctx.currentTime, 0.3);
-  }
-  function duck(sec) {                          // tone to 30 % in 10 ms, back over 150 ms after the click
-    if (!dip) return;
-    const t = ctx.currentTime;
-    dip.gain.cancelScheduledValues(t); dip.gain.setTargetAtTime(0.3, t, 0.01); dip.gain.setTargetAtTime(1, t + sec, 0.05);
-  }
-  function toneOff() {
-    if (!osc1) return;
-    const o1 = osc1, o2 = osc2, g = gain, t = ctx.currentTime; osc1 = osc2 = gain = dip = null;
-    g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value, t);
-    g.gain.linearRampToValueAtTime(0, t + 1.5);
-    o1.stop(t + 1.6); o2.stop(t + 1.6);
-  }
+  function toneOff() {}                       // nothing sustained on this page
 
   // Keep the phone's screen on while the timer runs (Android Chrome/Firefox, HTTPS).
   // Released on pause, finish, or when the tab is hidden. Nothing happens if unsupported.
@@ -237,7 +206,6 @@
     const b = p === 0 ? f : p === 1 ? 1 : p === 2 ? 1 - f : 0;
     const ease = b * b * (3 - 2 * b);
     box.style.setProperty('--l', L0 + (L1 - L0) * ease);
-    tonePitch(ease);
     // and its hue drifts over the session: blue → violet → rose → back to blue
     root.style.setProperty('--h', 215 + 110 * (0.5 - 0.5 * Math.cos(2 * Math.PI * t / TOTAL)));
     phaseEl.textContent = PHASES[p];
@@ -261,7 +229,6 @@
     last = performance.now();
     btn.textContent = 'Pause';
     keepAwake();
-    toneOn();
     raf = requestAnimationFrame(tick);
   }
 
