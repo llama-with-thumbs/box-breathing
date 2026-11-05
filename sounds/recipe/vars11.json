@@ -1,0 +1,37 @@
+{
+ "title": "Slow Click Closed II",
+ "h1": "8\u00d7 slow click \u00b7 closed in \u00b7 tuned for laptop and S22",
+ "out": "click-clusters-11.html",
+ "vars": [
+  [
+   "r11-a",
+   "Muffled",
+   "The slow click kept between 180 Hz and 1 kHz, small dead room. Nothing the speaker cannot play."
+  ],
+  [
+   "r11-b",
+   "Muffled, weight",
+   "Under 700 Hz, with weight made of harmonics of 55 Hz (165-385 Hz): the ear hears a low note the speaker never plays."
+  ],
+  [
+   "r11-c",
+   "Doubled deeper",
+   "The 8\u00d7 click with a 16\u00d7 copy under it, under 800 Hz."
+  ],
+  [
+   "r11-d",
+   "Two stages, closed",
+   "Second slowed click 140 ms later, under 700 Hz, lighter weight."
+  ],
+  [
+   "r11-e",
+   "Settling, pressure",
+   "After-rattle under 600 Hz, and a 100 Hz hum with its harmonics that cuts off at 0.9 s."
+  ],
+  [
+   "r11-f",
+   "Shut",
+   "12\u00d7 slow, under 500 Hz, weight from 50 Hz harmonics, tiniest room, hum cutting off. The most closed."
+  ]
+ ]
+}

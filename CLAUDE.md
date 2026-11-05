@@ -23,6 +23,8 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
 - Both pages hold a Screen Wake Lock while running (`keepAwake`/`letSleep`); released on pause/finish/hidden.
 - Timing from `requestAnimationFrame` deltas; hidden tab pauses; reduced-motion and dark mode respected.
 - No streaks, scores, or notifications: the user runs the instrument, never the reverse.
+- Sound is heard on laptop speakers and a Galaxy S22: nothing below ~180 Hz carries. Put weight in
+  harmonics (missing fundamental), keep cues 200 Hz-2 kHz, check on a phone speaker, not headphones.
 - Bauhaus: square, system font, no ornament. On `index.html` the square is the light
   (Turrell): no frame, brightens on inhale, dims on exhale, hue drifts 215→325→215 over
   the session, white dot walks the edge. Waking Up gave: air, light type, one filled button.
@@ -37,11 +39,15 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   `index.html` also plays a low tone that rises on inhale. Hue `--h` drifts on both pages.
 - Cross link: one grey word under the hint on each page (`.x`), chosen from six mocks
   (gallery artifact https://claude.ai/artifact/URBYeBMrWPFSUtqTjZtvZk).
+- Two recorded clicks are embedded in the pages as base64 8 kHz WAV (`sounds/`): `switch.wav`
+  plays on every press of the sound switch (on and off, both pages, ignores the setting);
+  `corner.wav` plays on `index.html` each time the dot reaches a corner (`lastSide`). The synthetic
+  thump is gone. Recipe and all earlier rounds: `sounds/README.md` and `sounds/recipe/`.
 
 ## State as of 4 Nov 2026
 
 Live at https://llama-with-thumbs.github.io/box-breathing/ and /unclench.html, commit a2f5da6
-(cross links). Vlad confirmed the wake lock on his Android. Sound switch #6, thump and breath
+(cross links), then recorded clicks in the pages (sounds/). Vlad confirmed the wake lock on his Android. Sound switch #6, thump and breath
 tone verified in Chrome on the live URLs. Local test server, if needed: `python -m http.server 8771`
 (8765 is taken by the materials project); none running now.
 

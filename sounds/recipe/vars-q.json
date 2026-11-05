@@ -1,0 +1,31 @@
+{
+ "title": "Clicks Five Six Slow",
+ "h1": "5 + 6 \u00b7 slow \u00b7 no highs, no edge",
+ "out": "voice030-56b.html",
+ "vars": [
+  [
+   "q-4a",
+   "4\u00d7, no highs, no edge",
+   "Four times slow, nothing above 600 Hz, and the first 100 ms held under 220 Hz so the start has no bright edge.",
+   "4a"
+  ],
+  [
+   "q-4b",
+   "4\u00d7, softer still",
+   "Nothing above 400 Hz, the first 150 ms under 180 Hz.",
+   "4b"
+  ],
+  [
+   "q-8a",
+   "8\u00d7",
+   "Eight times slow, as before.",
+   "8a"
+  ],
+  [
+   "q-8b",
+   "8\u00d7, no highs, no edge",
+   "Eight times, nothing above 500 Hz, the first 200 ms under 180 Hz.",
+   "8b"
+  ]
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "title": "Voice 030 Clicks",
+ "h1": "voice 030 \u00b7 only the clicks",
+ "out": "voice030.html",
+ "vars": [
+  [
+   "v-orig",
+   "Original",
+   "The recording as it came, brought up to level (it peaked at 9 %). 1.8 s.",
+   "0"
+  ],
+  [
+   "v-gated",
+   "Clicks only",
+   "Everything between the clicks set to silence. Inside each click, the recording as it is.",
+   "1"
+  ],
+  [
+   "v-clean",
+   "Clicks only, cleaned",
+   "Same, with the room noise subtracted inside the clicks too. Drier.",
+   "2"
+  ],
+  [
+   "v-tight",
+   "Tightened",
+   "The cleaned clicks 180 ms apart.",
+   "3"
+  ],
+  [
+   "v-k1",
+   "Click 1",
+   "At 0.75 s.",
+   "k1"
+  ],
+  [
+   "v-k2",
+   "Click 2",
+   "At 0.99 s.",
+   "k2"
+  ],
+  [
+   "v-k3",
+   "Click 3",
+   "At 1.02 s, 26 ms after click 2: may be the second part of the same hit.",
+   "k3"
+  ],
+  [
+   "v-k4",
+   "Click 4",
+   "At 1.18 s, the weakest; may be noise.",
+   "k4"
+  ],
+  [
+   "v-k5",
+   "Click 5",
+   "At 1.29 s.",
+   "k5"
+  ]
+ ]
+}

@@ -1,0 +1,32 @@
+{
+ "title": "Click Clusters II",
+ "h1": "Click clusters \u00b7 round two, from #1",
+ "out": "click-clusters-2.html",
+ "vars": [
+  [
+   "r2-a",
+   "One notch",
+   "10 hits over 0.8 s, 3 semitones down, bigger body. Servo at half."
+  ],
+  [
+   "r2-b",
+   "Fewer, slower",
+   "7 hits over 0.9 s, 5 semitones down, more thump. Servo at a third."
+  ],
+  [
+   "r2-c",
+   "Sparse, heavy",
+   "5 hits over 1 s, 7 semitones down, thump up front. Servo faint, lower (160 \u2192 900 Hz), longer."
+  ],
+  [
+   "r2-d",
+   "Slow, even",
+   "8 hits over 1.1 s, almost no speeding up. 5 down. Servo quiet and short."
+  ],
+  [
+   "r2-e",
+   "Mostly room",
+   "Like b, but the servo is barely there: you hear its reverb more than the servo itself."
+  ]
+ ]
+}

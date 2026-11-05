@@ -1,0 +1,32 @@
+{
+ "title": "Slow Motion Click",
+ "h1": "click 5 \u00b7 slow motion",
+ "out": "click-clusters-8.html",
+ "vars": [
+  [
+   "r8-a",
+   "4\u00d7 slow",
+   "The original click stretched four times: a quarter second, pitch two octaves down. Then the quiet siren."
+  ],
+  [
+   "r8-b",
+   "8\u00d7 slow",
+   "Eight times: half a second, three octaves down. The snap becomes a thud, the settle a rumble."
+  ],
+  [
+   "r8-c",
+   "16\u00d7 slow",
+   "Sixteen times: a full second, four octaves down. More a door than a click."
+  ],
+  [
+   "r8-d",
+   "Long click, 4\u00d7 slow",
+   "The ten-times click from last round, slowed four times: about a second of ring."
+  ],
+  [
+   "r8-e",
+   "8\u00d7 slow, no siren",
+   "Like b, alone."
+  ]
+ ]
+}

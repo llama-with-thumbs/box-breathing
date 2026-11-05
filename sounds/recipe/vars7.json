@@ -1,0 +1,32 @@
+{
+ "title": "Click Five Long",
+ "h1": "click 5 \u00b7 ten times as long",
+ "out": "click-clusters-7.html",
+ "vars": [
+  [
+   "r7-a",
+   "10\u00d7, siren as before",
+   "The click rings ten times as long as the original (about a quarter second). Siren as in the one you chose."
+  ],
+  [
+   "r7-b",
+   "10\u00d7, siren later",
+   "Same click. The siren waits 0.4 s and is fainter."
+  ],
+  [
+   "r7-c",
+   "10\u00d7, no siren",
+   "The long click alone, with a little room."
+  ],
+  [
+   "r7-d",
+   "10\u00d7, heavier",
+   "Same click with more low weight in the thump. Siren as before."
+  ],
+  [
+   "r7-e",
+   "10\u00d7, big room",
+   "Same click; the siren sits in a much bigger, darker room."
+  ]
+ ]
+}

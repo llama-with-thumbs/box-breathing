@@ -1,0 +1,27 @@
+{
+ "title": "Fused Clicks",
+ "h1": "clicks 1 + 4 + 5 \u00b7 overlapping",
+ "out": "click-clusters-5.html",
+ "vars": [
+  [
+   "r5-a",
+   "30 ms apart",
+   "Each click starts while the last one is still settling. Three edges you can still count."
+  ],
+  [
+   "r5-b",
+   "12 ms apart",
+   "One click with a rough, doubled edge."
+  ],
+  [
+   "r5-c",
+   "3 ms apart",
+   "Stacked almost on top of each other: one fat click."
+  ],
+  [
+   "r5-d",
+   "1, then 4+5 fused",
+   "Click 1 alone, 60 ms later clicks 4 and 5 fused 12 ms apart. Two sounds, the second thicker."
+  ]
+ ]
+}

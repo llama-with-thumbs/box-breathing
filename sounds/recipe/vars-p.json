@@ -1,0 +1,49 @@
+{
+ "title": "Clicks Five Six",
+ "h1": "voice 030 \u00b7 clicks 5 and 6",
+ "out": "voice030-56.html",
+ "vars": [
+  [
+   "p-5",
+   "Click 5",
+   "At 0.95 s in the take. Alone.",
+   "5"
+  ],
+  [
+   "p-6",
+   "Click 6",
+   "At 0.99 s, the loudest in the take. Alone.",
+   "6"
+  ],
+  [
+   "p-56",
+   "5 + 6 as recorded",
+   "40 ms apart, as they sat.",
+   "56"
+  ],
+  [
+   "p-56x2",
+   "5 + 6, 2\u00d7 slow",
+   "The pair stretched twice, an octave down.",
+   "2\u00d7"
+  ],
+  [
+   "p-56x4",
+   "5 + 6, 4\u00d7 slow",
+   "Four times, two octaves down.",
+   "4\u00d7"
+  ],
+  [
+   "p-56x8",
+   "5 + 6, 8\u00d7 slow",
+   "Eight times, three octaves down.",
+   "8\u00d7"
+  ],
+  [
+   "p-56x4lp",
+   "5 + 6, 4\u00d7 slow, no highs",
+   "Four times, nothing above 600 Hz.",
+   "4\u00d7 lp"
+  ]
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "title": "Three Clicks",
+ "h1": "clicks 1 + 4 + 5 \u00b7 combined",
+ "out": "click-clusters-4.html",
+ "vars": [
+  [
+   "r4-a",
+   "As they sat",
+   "Original timing from the cluster: 0.00 \u00b7 0.78 \u00b7 0.94 s. One, a wait, then two close."
+  ],
+  [
+   "r4-b",
+   "Tightened",
+   "Same shape, the wait cut to a third: 0.00 \u00b7 0.26 \u00b7 0.42 s."
+  ],
+  [
+   "r4-c",
+   "Even",
+   "Three in a row, 180 ms apart: 0.00 \u00b7 0.18 \u00b7 0.36 s."
+  ]
+ ]
+}

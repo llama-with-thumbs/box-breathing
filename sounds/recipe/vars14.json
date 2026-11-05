@@ -1,0 +1,37 @@
+{
+ "title": "Suspensor Clacks",
+ "h1": "suspensor clacks \u00b7 six variations",
+ "out": "click-clusters-14.html",
+ "vars": [
+  [
+   "r14-a",
+   "As written",
+   "Six clacks 300-1300 ms apart, each a knock + contact + damped ring, pitched down about nine semitones. A dark medium room. Under it the field: a 50 Hz harmonic stack and two detuned saws, lifting 3 dB."
+  ],
+  [
+   "r14-b",
+   "Heavier, slower",
+   "Four clacks, an octave down, more knock, longer ring. Drone lower and darker."
+  ],
+  [
+   "r14-c",
+   "Dirty, wet",
+   "Seven clacks with a louder, longer metallic ring and a soft fleshy squelch under each. Saws detuned wider, a little grit in the field. Bigger room."
+  ],
+  [
+   "r14-d",
+   "Sparse, field first",
+   "Three clacks far apart, the hum doing most of the work, lifting 4 dB."
+  ],
+  [
+   "r14-e",
+   "Lift-off",
+   "Clacks slowly closing up, as the units step faster; the field lifts 7 dB and cuts."
+  ],
+  [
+   "r14-f",
+   "Clacks only",
+   "No field: six clacks in the room. The mechanism alone."
+  ]
+ ]
+}

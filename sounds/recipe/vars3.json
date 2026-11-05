@@ -1,0 +1,42 @@
+{
+ "title": "Sparse Heavy Clicks",
+ "h1": "c \u00b7 sparse, heavy \u00b7 servo fades sooner, and the clicks alone",
+ "out": "click-clusters-3.html",
+ "vars": [
+  [
+   "r3-c1",
+   "c, servo 1.0 s",
+   "Same five clicks. Servo 1.8 s \u2192 1.0 s, most of that the fade."
+  ],
+  [
+   "r3-c2",
+   "c, servo 0.6 s",
+   "Same clicks. Servo 0.6 s: a flick, gone almost at once."
+  ],
+  [
+   "r3-k1",
+   "Click 1",
+   "Hit 1 of 5, at 0.00 s in the cluster. Snap + body + thump, 7 semitones down, big body."
+  ],
+  [
+   "r3-k2",
+   "Click 2",
+   "Hit 2 of 5, at 0.29 s in the cluster. Snap + body + thump, 7 semitones down, big body."
+  ],
+  [
+   "r3-k3",
+   "Click 3",
+   "Hit 3 of 5, at 0.55 s in the cluster. Snap + body + thump, 7 semitones down, big body."
+  ],
+  [
+   "r3-k4",
+   "Click 4",
+   "Hit 4 of 5, at 0.78 s in the cluster. Snap + body + thump, 7 semitones down, big body."
+  ],
+  [
+   "r3-k5",
+   "Click 5",
+   "Hit 5 of 5, at 0.94 s in the cluster. Snap + body + thump, 7 semitones down, big body."
+  ]
+ ]
+}

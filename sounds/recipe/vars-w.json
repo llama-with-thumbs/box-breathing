@@ -1,0 +1,79 @@
+{
+ "title": "Voice 030 Clicks II",
+ "h1": "voice 030 \u00b7 the clicks, whole",
+ "out": "voice030-2.html",
+ "vars": [
+  [
+   "w-orig",
+   "Original",
+   "As recorded, brought up to level.",
+   "0"
+  ],
+  [
+   "w-whole",
+   "Clicks, whole",
+   "Only the gaps are silenced. Each click kept from 6 ms before its edge until it has died back to the level before it. Nothing taken out of the clicks.",
+   "1"
+  ],
+  [
+   "w-gentle",
+   "Clicks, hum taken out",
+   "Same windows; inside each, only the steady hum that was already there just before the click is subtracted, gently.",
+   "2"
+  ],
+  [
+   "w-k1",
+   "Click 1",
+   "At 0.49 s, kept for 84 ms, peak 0.5 % of full scale.",
+   "k1"
+  ],
+  [
+   "w-k2",
+   "Click 2",
+   "At 0.59 s, kept for 305 ms, peak 0.5 % of full scale.",
+   "k2"
+  ],
+  [
+   "w-k3",
+   "Click 3",
+   "At 0.75 s, kept for 84 ms, peak 4.5 % of full scale.",
+   "k3"
+  ],
+  [
+   "w-k4",
+   "Click 4",
+   "At 0.85 s, kept for 92 ms, peak 0.6 % of full scale.",
+   "k4"
+  ],
+  [
+   "w-k5",
+   "Click 5",
+   "At 0.95 s, kept for 104 ms, peak 0.7 % of full scale.",
+   "k5"
+  ],
+  [
+   "w-k6",
+   "Click 6",
+   "At 0.99 s, kept for 84 ms, peak 1.8 % of full scale.",
+   "k6"
+  ],
+  [
+   "w-k7",
+   "Click 7",
+   "At 1.18 s, kept for 96 ms, peak 1.2 % of full scale.",
+   "k7"
+  ],
+  [
+   "w-k8",
+   "Click 8",
+   "At 1.28 s, kept for 112 ms, peak 2.9 % of full scale.",
+   "k8"
+  ],
+  [
+   "w-k9",
+   "Click 9",
+   "At 1.50 s, kept for 190 ms, peak 1.0 % of full scale.",
+   "k9"
+  ]
+ ]
+}

@@ -1,0 +1,27 @@
+{
+ "title": "Click Five",
+ "h1": "click 5 \u00b7 longer \u00b7 ending in a quiet siren",
+ "out": "click-clusters-6.html",
+ "vars": [
+  [
+   "r6-a",
+   "As it was + siren",
+   "Click 5 unchanged, then a siren at half the level it had in c, 0.9 s."
+  ],
+  [
+   "r6-b",
+   "Twice as long",
+   "The click settles twice as long. Same quiet siren."
+  ],
+  [
+   "r6-c",
+   "Three times as long",
+   "The click settles three times as long. Siren fainter, slower, 1.3 s."
+  ],
+  [
+   "r6-d",
+   "Long, siren at once",
+   "Twice-as-long click; the siren starts under its tail and is barely there, 0.7 s."
+  ]
+ ]
+}

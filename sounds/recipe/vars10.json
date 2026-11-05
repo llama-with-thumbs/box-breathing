@@ -1,0 +1,37 @@
+{
+ "title": "Slow Click Closed",
+ "h1": "8\u00d7 slow click \u00b7 no highs \u00b7 a small dead room",
+ "out": "click-clusters-10.html",
+ "vars": [
+  [
+   "r10-a",
+   "Muffled",
+   "The slow click with nothing above 800 Hz, in a small dead room: short, dark, close."
+  ],
+  [
+   "r10-b",
+   "Muffled, weight",
+   "Nothing above 500 Hz, a 42 Hz thump underneath, the room a little wetter."
+  ],
+  [
+   "r10-c",
+   "Doubled deeper",
+   "The 8\u00d7 click with a 16\u00d7 copy under it, nothing above 600 Hz. One hit, two depths."
+  ],
+  [
+   "r10-d",
+   "Two stages, closed",
+   "The slow click and click 4 slowed, 140 ms apart, both under 500 Hz, with weight."
+  ],
+  [
+   "r10-e",
+   "Settling, pressure",
+   "After-rattle under 400 Hz in the deadest room, with a faint 50 Hz hum that cuts off at 0.9 s, like a pressure leaving."
+  ],
+  [
+   "r10-f",
+   "Shut",
+   "12\u00d7 slow, nothing above 350 Hz, 38 Hz weight, a tiny room, the hum cutting off. The most closed of the six."
+  ]
+ ]
+}
