@@ -1,0 +1,49 @@
+{
+ "title": "Breath Tone Options",
+ "h1": "breath tone \u00b7 deeper, slower, less buzz",
+ "out": "tones.html",
+ "vars": [
+  [
+   "tn-t0",
+   "T0 \u00b7 Before: 220 + fifth",
+   "Two notes a fifth apart pulse at 110 Hz; on a phone that is the buzz.",
+   "T0"
+  ],
+  [
+   "tn-t1",
+   "T1 \u00b7 Now: 220 + octave",
+   "Same low note, its octave quietly above it. One semitone of rise, slower.",
+   "T1"
+  ],
+  [
+   "tn-t2",
+   "T2 \u00b7 196 + octave",
+   "A tone and a half deeper (G).",
+   "T2"
+  ],
+  [
+   "tn-t3",
+   "T3 \u00b7 220, warm",
+   "Octave plus a quiet third harmonic, rounded off: fuller, still smooth.",
+   "T3"
+  ],
+  [
+   "tn-t4",
+   "T4 \u00b7 220 alone",
+   "One sine, nothing else.",
+   "T4"
+  ],
+  [
+   "tn-t5",
+   "T5 \u00b7 220 + octave, slow swell",
+   "T1 with the loudness rolling slowly, like a far engine.",
+   "T5"
+  ],
+  [
+   "tn-t6",
+   "T6 \u00b7 185 + octave",
+   "Deeper still (F#). The phone speaker carries mostly the upper note.",
+   "T6"
+  ]
+ ]
+}
