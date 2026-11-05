@@ -43,7 +43,7 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
 - Two recorded clicks are embedded in the pages as base64 8 kHz WAV (`sounds/`): `switch.wav`
   plays on every press of the sound switch (on and off, both pages, ignores the setting);
   `corner1-4.wav` play on `index.html`, one per corner (the same click at 8.0x/7.3x/8.6x/9.3x slow,
-  about a semitone apart; `lastSide`). The tone ducks to 30 % under any click (`duck()`): tone + click
+  about a semitone apart; `lastSide`); no click at Start, Vlad heard it as distortion (5 Nov). The tone ducks to 30 % under any click (`duck()`): tone + click
   clipped before, heard as a buzz. The synthetic thump is gone. Recipe: `sounds/README.md`, `sounds/recipe/`.
 
 ## State as of 4 Nov 2026
