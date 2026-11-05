@@ -1,0 +1,43 @@
+{
+ "title": "Spacious Corners",
+ "h1": "corner click \u00b7 spacious, slow, low",
+ "out": "spacious.html",
+ "vars": [
+  [
+   "ph-c2",
+   "Now",
+   "What the page does today: 8x, to 350 Hz, dry.",
+   "0"
+  ],
+  [
+   "sp-s1",
+   "S1 \u00b7 12x, small dark room",
+   "Half again slower and lower; a short room, nothing above 500 Hz in the tail.",
+   "S1"
+  ],
+  [
+   "sp-s2",
+   "S2 \u00b7 16x, bigger room",
+   "Twice as slow as now, an octave lower; a room of about 1.6 s.",
+   "S2"
+  ],
+  [
+   "sp-s3",
+   "S3 \u00b7 20x, lower still, darker",
+   "Two and a half times slower; nothing above 300 Hz in the hit, 400 in the room.",
+   "S3"
+  ],
+  [
+   "sp-s4",
+   "S4 \u00b7 one hit, 16x, big room",
+   "Only the second hit of the pair, so one event, then its room.",
+   "S4"
+  ],
+  [
+   "sp-s5",
+   "S5 \u00b7 16x, mostly room",
+   "The hit nearly inside the room: more air than object.",
+   "S5"
+  ]
+ ]
+}
