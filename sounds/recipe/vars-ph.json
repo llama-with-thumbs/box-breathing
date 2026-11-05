@@ -1,0 +1,79 @@
+{
+ "title": "Phone Pass",
+ "h1": "on the phone \u00b7 less clank",
+ "out": "phone-pass.html",
+ "vars": [
+  [
+   "ph-x1",
+   "Now: tone 220 + click as shipped",
+   "What the page does today, one corner.",
+   "X1"
+  ],
+  [
+   "ph-x2",
+   "Tone 220 + rounder click",
+   "Same tone, click to 350 Hz with a 30 ms fade-in.",
+   "X2"
+  ],
+  [
+   "ph-x3",
+   "Tone 330 + rounder click",
+   "Tone a fifth up: the phone speaker plays 330 Hz cleanly, 220 Hz it strains at.",
+   "X3"
+  ],
+  [
+   "ph-x4",
+   "Tone 440 + duller click",
+   "Tone an octave up, click at 10x to 300 Hz.",
+   "X4"
+  ],
+  [
+   "ph-c1",
+   "Click as shipped",
+   "8x, to 500 Hz.",
+   "C1"
+  ],
+  [
+   "ph-c2",
+   "Click, rounder",
+   "8x, to 350 Hz, first edge faded in over 30 ms.",
+   "C2"
+  ],
+  [
+   "ph-c3",
+   "Click, duller",
+   "10x, to 300 Hz, 50 ms in.",
+   "C3"
+  ],
+  [
+   "ph-c4",
+   "Click, one hit",
+   "Only the second hit of the pair, 8x, to 400 Hz.",
+   "C4"
+  ],
+  [
+   "ph-t1",
+   "Tone 220 (now)",
+   "Breathes in over the second half.",
+   "T1"
+  ],
+  [
+   "ph-t2",
+   "Tone 330",
+   "A fifth up.",
+   "T2"
+  ],
+  [
+   "ph-t3",
+   "Tone 440",
+   "An octave up.",
+   "T3"
+  ],
+  [
+   "ph-t4",
+   "Tone 220, fifth quieter",
+   "The 330 Hz partner at a quarter instead of 0.6: purer, less beating on a small speaker.",
+   "T4"
+  ]
+ ]
+}
