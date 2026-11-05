@@ -5,7 +5,7 @@ Five recorded clicks live inside the pages as base64 WAV (8 kHz, mono, 16-bit), 
 | File | Used for | Where it came from |
 | --- | --- | --- |
 | `switch.wav` (0.18 s, 3 KB) | the sound switch, on and off, both pages | clicks 5+6 of `source/voice-030.m4a`, hum removed, slowed 4x, nothing above 400 Hz, first 150 ms under 180 Hz |
-| `corner1.wav` … `corner4.wav` (0.36-0.44 s, 6-7 KB each) | `index.html`, one per corner: inhale starts, top, exhale starts, bottom | the same pair slowed 8.0x, 7.3x, 8.6x, 9.3x (about a semitone apart), nothing above 350 Hz, the first 300 ms under 180 Hz, the first edge faded in over 30 ms (`phone.py`, less clank on the S22) |
+| `corner1.wav` … `corner4.wav` (0.36-0.44 s, 6-7 KB each) | `index.html`, one per corner: inhale starts, top, exhale starts, bottom | the same pair slowed 8.0x, 7.3x, 8.6x, 9.3x (about a semitone apart), nothing above 350 Hz, the first 300 ms under 180 Hz, the first edge faded in over 30 ms (`phone.py`, less clank on the S22), then everything under 170 Hz cut (`hp4.py`: at full level it only overdrove the phone speaker, heard as distortion at Start) |
 
 Both are heard on laptop speakers and a Galaxy S22, so nothing in them relies on frequencies under about 180 Hz.
 
