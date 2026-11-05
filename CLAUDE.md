@@ -45,6 +45,21 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   the first at Start (`lastSide`; the same click at four speeds, 180-350 Hz, edge faded in for the S22).
   No breath tone: Vlad asked for it out on 5 Nov (buzz on the phone). Recipe: `sounds/README.md`, `sounds/recipe/`.
 
+## Sound rules (from the 5 Nov research; full page https://claude.ai/artifact/BEDzSjEsEmwnASBvgEMgJY)
+
+1. One sound per meaning, one meaning per sound; never two at once.
+2. A cue invites; it never repeats, escalates or speeds up (rate = urgency).
+3. Nothing sounds on the person's own tap; cues come from the clock.
+4. Onset 30-50 ms, never a hard edge. Decay short (tap) or long (bell), not the onset.
+5. Nothing under 180 Hz leaves the page; weight by harmonics; high-pass every cue.
+6. Octaves and wide spacing only; no fifths or thirds under 500 Hz (critical band ~100 Hz there).
+7. A drone changes slower than you can notice (< 1 semitone/min, beating < 1 Hz) or it is a signal.
+8. A drone only if the phone speaker can hold it (>= 300 Hz and rule 6); clicks-only is complete.
+9. One family of material per instrument set; cues differ by rhythm and timbre first, pitch by >= 1 semitone.
+10. Sound is never the only channel; the page works with the switch off.
+11. Decide on the S22, not on headphones; every sound round ends in a gallery heard on the phone.
+12. Peak budget is one: sum the peaks of what can sound together; over 1.0, something ducks or goes.
+
 ## State as of 4 Nov 2026
 
 Live at https://llama-with-thumbs.github.io/box-breathing/ and /unclench.html: cross links, recorded
