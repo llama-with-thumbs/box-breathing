@@ -1,0 +1,109 @@
+{
+ "title": "Hums And Signals",
+ "h1": "hums for breathing \u00b7 hums for unclench \u00b7 signals for unclench",
+ "out": "hums.html",
+ "vars": [
+  [
+   "hm-h1",
+   "Breathing \u00b7 octave stack, slow beat",
+   "330 Hz with its octave a quarter-hertz off, so the pair swells once every four seconds. Nothing moves faster than that.",
+   "H1"
+  ],
+  [
+   "hm-h2",
+   "Breathing \u00b7 air",
+   "A band of noise, 300-1500 Hz, swelling once per box (16 s). No note at all.",
+   "H2"
+  ],
+  [
+   "hm-h3",
+   "Breathing \u00b7 hum from harmonics",
+   "330, 660, 1320 at falling levels with a 3-cent wobble every seven seconds. The ear hears something lower than any of them.",
+   "H3"
+  ],
+  [
+   "hm-h4",
+   "Breathing \u00b7 drift",
+   "D4 and its octave in a large dark room, sinking one semitone over the clip (on the page that would be over the whole two minutes).",
+   "H4"
+  ],
+  [
+   "hm-h5",
+   "Breathing \u00b7 the old tone, moved up",
+   "What the page had, at 330 instead of 220, octave not fifth: rises one semitone on the inhale, falls on the exhale.",
+   "H5"
+  ],
+  [
+   "hm-h6",
+   "Breathing \u00b7 air and harmonics",
+   "H3 under H2: a note to lean on and air that breathes.",
+   "H6"
+  ],
+  [
+   "hm-u1",
+   "Unclench \u00b7 air only",
+   "Noise 250-900 Hz with one slow swell. Nothing to follow; a room to be in.",
+   "U1"
+  ],
+  [
+   "hm-u2",
+   "Unclench \u00b7 C4 in a big room",
+   "An octave pair, almost still, in a 3.5 s dark room.",
+   "U2"
+  ],
+  [
+   "hm-u3",
+   "Unclench \u00b7 sinking",
+   "G4 with warm air, dropping a semitone over the clip, as the body lets go.",
+   "U3"
+  ],
+  [
+   "hm-u4",
+   "Unclench \u00b7 wide and slow",
+   "C4 and the C two octaves up, beating slowly, with air.",
+   "U4"
+  ],
+  [
+   "hm-s0",
+   "Signal \u00b7 the ping as it is",
+   "220 Hz sine, instant on. For comparison; it breaks rules 4 and 5.",
+   "S0"
+  ],
+  [
+   "hm-s1",
+   "Signal \u00b7 the ping, moved up",
+   "330 + octave, 40 ms on, 0.7 s out.",
+   "S1"
+  ],
+  [
+   "hm-s2",
+   "Signal \u00b7 bowl",
+   "330 with an inharmonic partner (2.76x), 50 ms on, two seconds of ring in a room.",
+   "S2"
+  ],
+  [
+   "hm-s3",
+   "Signal \u00b7 two wooden taps",
+   "Noise 300-1200 Hz, 30 ms on, 120 ms apart. No note.",
+   "S3"
+  ],
+  [
+   "hm-s4",
+   "Signal \u00b7 the family click",
+   "The corner click from the breathing page as the step cue: one material across both pages (rule 9).",
+   "S4"
+  ],
+  [
+   "hm-s5",
+   "Signal \u00b7 the exhale slide as it is",
+   "330 down to 165 over six seconds. Goes under the phone halfway (rule 5).",
+   "S5"
+  ],
+  [
+   "hm-s6",
+   "Signal \u00b7 the slide kept above 180",
+   "440 down to 330 with its octave, same six seconds.",
+   "S6"
+  ]
+ ]
+}
