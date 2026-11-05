@@ -32,17 +32,20 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   Sound is Web Audio (220 Hz ping when a step's time is up; 330→165 Hz slide on
   each exhale), on by default, mute remembered in `localStorage` `unclench.sound`.
   No text input: Vlad asked for nothing to type.
+- Sound switch on both pages: a small lit square + "Sound on/off" (word lit by the square,
+  width-stable), thump on press-on, one shared `localStorage` key `instruments.sound`.
+  `index.html` also plays a low tone that rises on inhale. Hue `--h` drifts on both pages.
+- Cross link: one grey word under the hint on each page (`.x`), chosen from six mocks
+  (gallery artifact https://claude.ai/artifact/URBYeBMrWPFSUtqTjZtvZk).
 
-## State as of 3 Nov 2026
+## State as of 4 Nov 2026
 
-`index.html` and `unclench.html` written and checked in Chrome (steps, word box,
-breath text, finish, no console errors). Vlad chose visual B (growing square),
-sound on with mute; the one-word box was tried and removed. Pushed to
-https://github.com/llama-with-thumbs/box-breathing, Pages enabled (main, root):
-https://llama-with-thumbs.github.io/box-breathing/ and /unclench.html. Local test server: `python -m http.server 8771` (8765 is taken by
-the materials project).
+Live at https://llama-with-thumbs.github.io/box-breathing/ and /unclench.html, commit a2f5da6
+(cross links). Vlad confirmed the wake lock on his Android. Sound switch #6, thump and breath
+tone verified in Chrome on the live URLs. Local test server, if needed: `python -m http.server 8771`
+(8765 is taken by the materials project); none running now.
 
 ## Next step
 
-Vlad tries both pages on his phone from the Pages URL and says what to change.
-`unclench.html` has not had the Turrell/Waking Up pass yet; ask whether it should.
+Vlad tries the cross link and the tone on his phone. `unclench.html` still has the red square and
+outlined frame; the Turrell/Waking Up pass for it is offered, not decided.
