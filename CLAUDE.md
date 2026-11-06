@@ -37,13 +37,18 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   No text input: Vlad asked for nothing to type.
 - Sound switch on both pages: a small lit square + "Sound on/off" (word lit by the square,
   width-stable), click on press, one shared `localStorage` key `instruments.sound`.
-  `index.html` has no tone any more. Hue `--h` drifts on both pages.
+  `index.html` runs a hum (see Hums). Hue `--h` drifts on both pages.
 - Cross link: one grey word under the hint on each page (`.x`), chosen from six mocks
   (gallery artifact https://claude.ai/artifact/URBYeBMrWPFSUtqTjZtvZk).
 - Recorded clicks are embedded in the pages as base64 8 kHz WAV (`sounds/`): `switch.wav` on every press of
   the sound switch (both pages, ignores the setting); `corner1-4.wav` on `index.html` at each corner except
   the first at Start (`lastSide`; the same click at four speeds, 180-350 Hz, edge faded in for the S22).
-  No breath tone: Vlad asked for it out on 5 Nov (buzz on the phone). Recipe: `sounds/README.md`, `sounds/recipe/`.
+  Recipe: `sounds/README.md`, `sounds/recipe/`. On `unclench.html` the step cue is the same corner click (`STEP_WAV`).
+- Hums, made in Web Audio, level 0.22, duck to 30 % under any click (rule 12), nothing under 180 Hz:
+  `index.html` = gallery H6 + H1 (330 Hz, octave a quarter-hertz off, third harmonic, air 300-1500 Hz swelling once
+  per box; leans up to 25 cents as the dot nears a corner, `humFollow`). `unclench.html` = gallery U4 (C4 + C6 beating,
+  air 300-700 Hz, 2 s room; breathes 40 cents up over 4 s, down over 6 s, `humBreathe`). The exhale slide stays as it was.
+  The old 220 Hz breath tone (a fifth) buzzed on the phone and is gone. Gallery: https://claude.ai/artifact/3jC8SKcGoHdXojwGqZamNs
 
 ## Sound rules (from the 5 Nov research; full page https://claude.ai/artifact/BEDzSjEsEmwnASBvgEMgJY)
 
@@ -63,12 +68,12 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
 ## State as of 4 Nov 2026
 
 Live at https://llama-with-thumbs.github.io/box-breathing/ and /unclench.html: cross links, recorded
-clicks (sounds/), then the breath tone taken out, clicks kept (5 Nov). Gallery of corner siblings
+clicks (sounds/), then hums by the sound rules on both pages, clicks kept, step cue = corner click (5 Nov). Gallery of corner siblings
 (set A shipped, set B brightness variants): https://claude.ai/artifact/ULgCLzEArHa5uBv1Eev4dc. Vlad confirmed the wake lock on his Android. Sound switch #6, thump and breath
 tone verified in Chrome on the live URLs. Local test server, if needed: `python -m http.server 8771`
 (8765 is taken by the materials project); none running now.
 
 ## Next step
 
-Vlad tries the clicks-only breathing page on the S22. Tone options, if it ever comes back: https://claude.ai/artifact/Ju8UShdZLE68CDLzvRM213. `unclench.html` still has the red square and
+Vlad tries both hums on the S22 (level 0.22 is a first guess; may want louder or quieter). `unclench.html` still has the red square and
 outlined frame; the Turrell/Waking Up pass for it is offered, not decided.

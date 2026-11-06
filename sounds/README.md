@@ -1,6 +1,6 @@
 # Sounds
 
-Five recorded clicks live inside the pages as base64 WAV (8 kHz, mono, 16-bit), so each page stays one file that works offline. The breath tone on `index.html` was removed on 5 Nov 2026 (buzz on the S22); the clicks are the only sound there.
+Five recorded clicks live inside the pages as base64 WAV (8 kHz, mono, 16-bit), so each page stays one file that works offline. Both pages also run a hum made in Web Audio (`hums.py` has the gallery versions; `apply_hums.py` put them in). `unclench.html` uses `corner1.wav` as its step cue.
 
 | File | Used for | Where it came from |
 | --- | --- | --- |
