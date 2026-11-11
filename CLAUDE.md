@@ -53,7 +53,7 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
 - Switching pages (10 Nov): every page ends with the same `nav.nav`: Box, Unclench, Hexagon, in that order; the current
   one is a lit span (`aria-current`), the others are links. This replaces the single grey cross link.
 - `hexagon.html` (10 Nov): a hexagon of light, the dot walks one side every 4 s, 5 laps = 2:00. A tone (sine + octave +
-  second octave, level 0.35) slides into a new note at each corner: A3, C3, G3, C#4, G3, C#4 (`NOTES`, `GLIDE` 0.5 s).
+  second octave, level 0.35) slides into a new note at each corner: A3, B4, G3, C#4, G3, C#4 (`NOTES`, `GLIDE` 0.5 s).
   The light is brighter on higher notes. No corner clicks; the switch clicks. Linked from `index.html`. Built by
   `sounds/recipe/hexagon.py`.
 
