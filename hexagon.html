@@ -46,7 +46,8 @@
   button:hover, button:focus-visible { opacity: .85; outline: none; }
   .hint { color: var(--muted); font-size: 14px; }
   .x { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 8px; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
-  .x:hover, .x:focus-visible { color: var(--fg); outline: none; }
+  .x:hover, .x:focus-visible, .x[aria-current] { color: var(--fg); outline: none; }
+  .nav { display: flex; gap: 8px; justify-content: center; }   /* the same three words on every page, the one you are on lit */
 
   .row { display: flex; gap: 20px; align-items: center; justify-content: center; flex-wrap: wrap; }
   .snd { display: inline-flex; align-items: center; gap: 12px; padding: 8px 4px; min-height: 44px; background: none; border: 0; color: var(--muted); letter-spacing: .1em; }
@@ -89,7 +90,7 @@
     <button id="snd" type="button" class="snd" aria-pressed="true"><span class="sq"></span><span class="word"><span>Sound </span><span class="on">on</span><span class="off">off</span></span></button>
   </div>
   <p class="hint">Six notes, four seconds each. Follow the dot. Space starts or pauses.</p>
-  <a class="x" href="index.html">← Box breathing</a>
+  <nav class="nav" aria-label="Instruments"><a class="x" href="index.html">Box</a><a class="x" href="unclench.html">Unclench</a><span class="x" aria-current="page">Hexagon</span></nav>
 </main>
 
 <script>

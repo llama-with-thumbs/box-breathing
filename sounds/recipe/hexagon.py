@@ -1,3 +1,4 @@
+# Note: the three-word nav was added to hexagon.html by hand after this build (10 Nov); re-running overwrites it.
 """Builds hexagon.html: a hexagon of light, a dot walking its edge 4 s per side, a tone gliding through six notes."""
 import re, os, subprocess, tempfile
 os.chdir(r"C:\Users\laman\Documents\git\box-breathing")
