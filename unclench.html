@@ -69,7 +69,10 @@
   /* the way to the other instrument: one grey word, last on the page */
   .x { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 8px; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
   .x:hover, .x:focus-visible, .x[aria-current] { color: var(--fg); outline: none; }
-  .nav { display: flex; gap: 8px; justify-content: center; }   /* the same three words on every page, the one you are on lit */
+  .nav { display: flex; align-items: center; justify-content: center; }   /* a carousel: Box, Unclench, Hexagon, round and round */
+  .nav .x { justify-content: center; }
+  .nav a.x { min-width: 44px; font-size: 16px; letter-spacing: 0; }   /* the arrows: thumb-sized, always in the same place */
+  .nav span.x { width: 11em; }                                          /* the name: fixed width, so the arrows do not move between pages */
 
   @media (prefers-reduced-motion: reduce) { .inner { transition: none; } }
 </style>
@@ -99,7 +102,7 @@
     <button id="snd" type="button" class="snd" aria-pressed="true"><span class="sq"></span><span class="word"><span>Sound </span><span class="on">on</span><span class="off">off</span></span></button>
   </div>
   <p class="hint">A ping marks each step. Tap to move on early. Space works too.</p>
-  <nav class="nav" aria-label="Instruments"><a class="x" href="index.html">Box</a><span class="x" aria-current="page">Unclench</span><a class="x" href="hexagon.html">Hexagon</a></nav>
+  <nav class="nav" aria-label="Instruments"><a class="x" href="index.html" aria-label="Previous: Box">←</a><span class="x" aria-current="page">Unclench</span><a class="x" href="hexagon.html" aria-label="Next: Hexagon">→</a></nav>
 </main>
 
 <script>
