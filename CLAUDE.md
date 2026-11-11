@@ -50,6 +50,11 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   air 300-700 Hz, 2 s room; breathes 40 cents up over 4 s, down over 6 s, `humBreathe`). The exhale slide stays as it was.
   The old 220 Hz breath tone (a fifth) buzzed on the phone and is gone. Gallery: https://claude.ai/artifact/3jC8SKcGoHdXojwGqZamNs
 
+- `hexagon.html` (10 Nov): a hexagon of light, the dot walks one side every 4 s, 5 laps = 2:00. A tone (sine + octave +
+  second octave, level 0.35) slides into a new note at each corner: A3, C3, G3, C#4, G3, C#4 (`NOTES`, `GLIDE` 0.5 s).
+  The light is brighter on higher notes. No corner clicks; the switch clicks. Linked from `index.html`. Built by
+  `sounds/recipe/hexagon.py`.
+
 ## Sound rules (from the 5 Nov research; full page https://claude.ai/artifact/BEDzSjEsEmwnASBvgEMgJY)
 
 1. One sound per meaning, one meaning per sound; never two at once.
@@ -74,6 +79,10 @@ tone verified in Chrome on the live URLs. Local test server, if needed: `python 
 (8765 is taken by the materials project); none running now.
 
 ## Next step
+
+10 Nov: `index.html` has the 220+440 breath tone back (rolled back twice on 6 Nov; hums are off both pages). Vlad is choosing
+among breathing hums 5/6/9 (https://claude.ai/artifact/5TYzihGFusRA2t7PjhVGTY) and has not heard `hexagon.html` on the phone yet.
+`soundcheck.html` is built but untracked. Older note follows.
 
 Vlad tries both hums on the S22 (level 0.22 is a first guess; may want louder or quieter). `unclench.html` still has the red square and
 outlined frame; the Turrell/Waking Up pass for it is offered, not decided.

@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hexagon</title>
+<meta name="description" content="Two minutes: a dot walks a hexagon, four seconds a side, and a tone moves through six notes.">
+<meta name="theme-color" content="#f4f1ea">
+<style>
+  :root {
+    --bg: #ece9e2; --fg: #1a1a1a; --muted: #7a766e; --on: #ffffff;
+    --l0: 44; --l1: 66;     /* lightness of the light: lowest note, highest note */
+    --glow: .35;
+    --h: 215;               /* hue of the light; drifts over the session */
+    --light: hsl(var(--h) 60% 44%);
+    --ink: hsl(var(--h) 70% 72%);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0b0c10; --fg: #ece9e2; --muted: #8a877f; --l0: 24; --l1: 46; --glow: .6; }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg); color: var(--fg);
+    font: 300 18px/1.4 system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    display: grid; place-items: center; padding: 16px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  main { width: min(100%, 420px); display: grid; gap: 36px; justify-items: center; text-align: center; }
+  h1 { font-size: 13px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+
+  .box { position: relative; width: min(76vw, 310px); aspect-ratio: 1; cursor: pointer; user-select: none; --l: var(--l0); }
+  .box svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible;
+             filter: drop-shadow(0 0 45px hsl(var(--h) 60% calc(var(--l) * 1%) / var(--glow))); }
+  .hex { fill: hsl(var(--h) 60% calc(var(--l) * 1%)); }
+  .dot { fill: var(--on); opacity: .9; }
+  .label { position: absolute; inset: 0; display: grid; place-content: center; gap: 8px; pointer-events: none; color: var(--on); }
+  .phase { font-size: 15px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; opacity: .85; }
+  .count { font-size: min(64px, 14vw); font-weight: 200; line-height: 1; white-space: nowrap; }
+
+  .meta { display: flex; gap: 32px; color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; }
+  button {
+    font: inherit; font-size: 14px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+    border: 0; background: var(--fg); color: var(--bg); padding: 12px 32px; cursor: pointer; border-radius: 0;
+  }
+  button:hover, button:focus-visible { opacity: .85; outline: none; }
+  .hint { color: var(--muted); font-size: 14px; }
+  .x { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 8px; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
+  .x:hover, .x:focus-visible { color: var(--fg); outline: none; }
+
+  .row { display: flex; gap: 20px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .snd { display: inline-flex; align-items: center; gap: 12px; padding: 8px 4px; min-height: 44px; background: none; border: 0; color: var(--muted); letter-spacing: .1em; }
+  .snd:hover, .snd:focus-visible { opacity: 1; outline: none; }
+  .snd:focus-visible .sq { outline: 2px solid var(--fg); outline-offset: 3px; }
+  .snd .sq { display: block; width: 18px; height: 18px; border: 2px solid var(--fg); box-sizing: border-box; transition: background .4s, border-color .4s, box-shadow .4s, transform .15s; }
+  .snd:active .sq { transform: scale(.85); }
+  .snd[aria-pressed="true"] .sq { background: var(--light); border-color: var(--light); box-shadow: 0 0 16px var(--light); }
+  .snd .word { display: inline-grid; grid-auto-flow: column; align-items: baseline; transition: color .5s, text-shadow .5s; }
+  .snd .word > :first-child { grid-area: 1 / 1; white-space: pre; }
+  .snd .on, .snd .off { grid-area: 1 / 2; visibility: hidden; }
+  .snd[aria-pressed="true"] .on { visibility: visible; }
+  .snd[aria-pressed="false"] .off { visibility: visible; }
+  .snd[aria-pressed="true"] .word { color: var(--ink); text-shadow: 0 0 12px hsl(var(--h) 80% 60% / .7); }
+  @media (prefers-reduced-motion: reduce) { .box svg { filter: none; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Hexagon · 2 minutes</h1>
+
+  <div class="box" id="box" title="Click to start or pause">
+    <svg viewBox="0 0 100 100" role="img" aria-label="A hexagon of light; a dot travels one side every four seconds; the light is brighter on higher notes">
+      <polygon class="hex" points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25"/>
+      <circle class="dot" id="dot" cx="50" cy="0" r="3"/>
+    </svg>
+    <div class="label" aria-live="polite">
+      <div class="phase" id="phase">Ready</div>
+      <div class="count" id="count">6 · 4</div>
+    </div>
+  </div>
+
+  <div class="meta">
+    <span id="round">Lap 0 / 5</span>
+    <span id="left">2:00</span>
+  </div>
+
+  <div class="row">
+    <button id="btn" type="button">Start</button>
+    <button id="snd" type="button" class="snd" aria-pressed="true"><span class="sq"></span><span class="word"><span>Sound </span><span class="on">on</span><span class="off">off</span></span></button>
+  </div>
+  <p class="hint">Six notes, four seconds each. Follow the dot. Space starts or pauses.</p>
+  <a class="x" href="index.html">← Box breathing</a>
+</main>
+
+<script>
+(() => {
+  // ---- the six sides: note name and frequency. Change the walk here and nowhere else. ----
+  const NOTES = [['A3', 220.00], ['C3', 130.81], ['G3', 196.00], ['C♯4', 277.18], ['G3', 196.00], ['C♯4', 277.18]];
+  const SIDE = 4;                                   // seconds per side
+  const LAPS = 5;                                   // 5 × 24 s = 2:00
+  const CYCLE = SIDE * NOTES.length, TOTAL = CYCLE * LAPS;
+  const GLIDE = 0.5;                                // time constant of the slide into a note, s (about 1.5 s to arrive)
+  const V = [[50, 0], [93.3, 25], [93.3, 75], [50, 100], [6.7, 75], [6.7, 25]];   // corners, clockwise from the top
+
+  const $ = id => document.getElementById(id);
+  const dot = $('dot'), box = $('box'), btn = $('btn');
+  const phaseEl = $('phase'), countEl = $('count'), roundEl = $('round'), leftEl = $('left');
+  const root = document.documentElement, css = getComputedStyle(root);
+  const L0 = +css.getPropertyValue('--l0'), L1 = +css.getPropertyValue('--l1');
+  const lo = Math.min(...NOTES.map(n => n[1])), hi = Math.max(...NOTES.map(n => n[1]));
+  const height = f => Math.log(f / lo) / Math.log(hi / lo);       // 0 lowest note .. 1 highest
+  let running = false, elapsed = 0, last = 0, raf = 0, lastSide = -1, lit = height(NOTES[0][1]);
+
+  // ---- sound: a tone made here, one recorded click for the switch. Nothing plays before a tap. ----
+  let ctx = null, sound = true;
+  try { sound = localStorage.getItem('instruments.sound') !== 'off'; } catch (e) {}
+  const sndBtn = $('snd');
+  const showSound = () => sndBtn.setAttribute('aria-pressed', String(sound));
+  showSound();
+  const mkCtx = () => {                         // on iPhone the 'playback' session keeps the ring switch from muting it
+    const c = new (window.AudioContext || window.webkitAudioContext)();
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+    return c;
+  };
+  const anyAudio = () => { try { if (!ctx) ctx = mkCtx(); if (ctx.state === 'suspended') ctx.resume(); return ctx; } catch (e) { return null; } };
+  const audio = () => sound ? anyAudio() : null;
+  const SWITCH_WAV = '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';
+  let switchBuf = null;
+  const bytes = () => { const bin = atob(SWITCH_WAV), arr = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i); return arr.buffer; };
+  try { new (window.OfflineAudioContext || window.webkitOfflineAudioContext)(1, 8, 44100).decodeAudioData(bytes(), b => { switchBuf = b; }, () => {}); } catch (e) {}
+  function switchClick() {                      // the switch always clicks, whatever the setting
+    const c = anyAudio(); if (!c) return;
+    const go = buf => { const s = c.createBufferSource(), g = c.createGain(); s.buffer = buf; g.gain.value = 0.9; s.connect(g).connect(c.destination); duck(Math.min(0.5, buf.duration)); s.start(); };
+    if (switchBuf) return go(switchBuf);
+    c.decodeAudioData(bytes(), b => { switchBuf = b; go(b); }, () => {});
+  }
+  sndBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    sound = !sound; showSound();
+    try { localStorage.setItem('instruments.sound', sound ? 'on' : 'off'); } catch (e) {}
+    switchClick(); if (!sound) toneOff(); else if (running) toneOn(NOTES[Math.max(0, lastSide)][1]);
+  });
+
+  // the tone: a sine with its octave and a trace of the octave above that. Octaves only, so nothing rubs; the
+  // upper two carry C3 (131 Hz) on a phone speaker, which cannot play the note itself. It slides into each note.
+  const MIX = [1, 0.4, 0.1];
+  let oscs = null, gain = null, dip = null;
+  function toneOn(f) {
+    const c = audio(); if (!c || oscs) return;
+    const t = c.currentTime;
+    gain = c.createGain(); gain.gain.setValueAtTime(0, t); gain.gain.linearRampToValueAtTime(0.35, t + 2);
+    dip = c.createGain();
+    oscs = MIX.map((a, i) => { const o = c.createOscillator(), v = c.createGain(); o.type = 'sine'; o.frequency.value = f * (1 << i); v.gain.value = a; o.connect(v).connect(gain); o.start(); return o; });
+    gain.connect(dip).connect(c.destination);
+  }
+  function toneTo(f) { if (oscs) oscs.forEach((o, i) => o.frequency.setTargetAtTime(f * (1 << i), ctx.currentTime, GLIDE)); }
+  function duck(sec) {
+    if (!dip) return;
+    const t = ctx.currentTime;
+    dip.gain.cancelScheduledValues(t); dip.gain.setTargetAtTime(0.3, t, 0.01); dip.gain.setTargetAtTime(1, t + sec, 0.05);
+  }
+  function toneOff() {
+    if (!oscs) return;
+    const os = oscs, g = gain, t = ctx.currentTime; oscs = gain = dip = null;
+    g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value, t); g.gain.linearRampToValueAtTime(0, t + 1.5);
+    os.forEach(o => o.stop(t + 1.6));
+  }
+
+  // Keep the phone's screen on while the timer runs. Released on pause, finish, or when the tab is hidden.
+  let lock = null;
+  async function keepAwake() {
+    try { if (!lock && navigator.wakeLock) { lock = await navigator.wakeLock.request('screen'); lock.addEventListener('release', () => { lock = null; }); } } catch (e) {}
+  }
+  function letSleep() { if (lock) { lock.release().catch(() => {}); lock = null; } }
+
+  const fmt = s => { s = Math.max(0, Math.ceil(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+
+  function render(t, dt) {
+    const inCycle = t % CYCLE;
+    const p = Math.floor(inCycle / SIDE);           // which side, 0..5
+    const f = (inCycle - p * SIDE) / SIDE;          // 0..1 along it
+    if (p !== lastSide) { lastSide = p; toneTo(NOTES[p][1]); }
+    const a = V[p], b = V[(p + 1) % V.length];
+    dot.setAttribute('cx', a[0] + (b[0] - a[0]) * f);
+    dot.setAttribute('cy', a[1] + (b[1] - a[1]) * f);
+    // the light follows the note at the tone's own pace: higher is brighter
+    lit += (height(NOTES[p][1]) - lit) * (1 - Math.exp(-dt / GLIDE));
+    box.style.setProperty('--l', L0 + (L1 - L0) * lit);
+    root.style.setProperty('--h', 215 + 110 * (0.5 - 0.5 * Math.cos(2 * Math.PI * t / TOTAL)));
+    phaseEl.textContent = 'Side ' + (p + 1);
+    countEl.textContent = NOTES[p][0];
+    roundEl.textContent = `Lap ${Math.min(LAPS, Math.floor(t / CYCLE) + 1)} / ${LAPS}`;
+    leftEl.textContent = fmt(TOTAL - t);
+  }
+
+  function tick(now) {
+    if (!running) return;
+    const dt = Math.max(0, (now - last) / 1000);   // a frame's timestamp can sit just before the press
+    elapsed += dt; last = now;
+    if (elapsed >= TOTAL) { finish(); return; }
+    render(elapsed, dt);
+    raf = requestAnimationFrame(tick);
+  }
+  function start() {
+    if (elapsed >= TOTAL) elapsed = 0;
+    running = true; last = performance.now();
+    btn.textContent = 'Pause';
+    keepAwake();
+    lastSide = Math.floor((elapsed % CYCLE) / SIDE);
+    toneOn(NOTES[lastSide][1]);
+    raf = requestAnimationFrame(tick);
+  }
+  function pause() {
+    running = false; cancelAnimationFrame(raf);
+    letSleep(); toneOff();
+    btn.textContent = elapsed > 0 ? 'Resume' : 'Start';
+    phaseEl.textContent = 'Paused';
+  }
+  function finish() {
+    running = false; letSleep(); toneOff();
+    elapsed = TOTAL; lastSide = -1; lit = height(NOTES[0][1]);
+    dot.setAttribute('cx', V[0][0]); dot.setAttribute('cy', V[0][1]);
+    box.style.setProperty('--l', L0 + (L1 - L0) * lit); root.style.setProperty('--h', 215);
+    phaseEl.textContent = 'Done'; countEl.textContent = '·';
+    roundEl.textContent = `Lap ${LAPS} / ${LAPS}`; leftEl.textContent = '0:00';
+    btn.textContent = 'Again';
+  }
+
+  const toggle = () => running ? pause() : start();
+  btn.addEventListener('click', toggle);
+  box.addEventListener('click', toggle);
+  document.addEventListener('keydown', e => { if (e.code === 'Space' && !e.repeat) { e.preventDefault(); toggle(); } });
+  document.addEventListener('visibilitychange', () => { if (document.hidden && running) pause(); });
+  box.style.setProperty('--l', L0 + (L1 - L0) * lit);
+})();
+</script>
+</body>
+</html>
