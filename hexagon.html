@@ -29,7 +29,7 @@
   main { width: min(100%, 420px); display: grid; gap: 36px; justify-items: center; text-align: center; }
   h1 { font-size: 13px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
 
-  .box { position: relative; width: min(76vw, 310px); aspect-ratio: 1; cursor: pointer; user-select: none; --l: var(--l0); }
+  .box { position: relative; width: min(72vw, 300px); aspect-ratio: 1; cursor: pointer; user-select: none; --l: var(--l0); }
   .box svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible;
              filter: drop-shadow(0 0 45px hsl(var(--h) 60% calc(var(--l) * 1%) / var(--glow))); }
   .hex { fill: hsl(var(--h) 60% calc(var(--l) * 1%)); }
@@ -44,7 +44,8 @@
     border: 0; background: var(--fg); color: var(--bg); padding: 12px 32px; cursor: pointer; border-radius: 0;
   }
   button:hover, button:focus-visible { opacity: .85; outline: none; }
-  .hint { color: var(--muted); font-size: 14px; }
+  #btn { min-width: 140px; } #snd { min-width: 128px; }                      /* same on every page: the label changes, the button and the switch do not move */
+  .hint { color: var(--muted); font-size: 14px; min-height: 4.2em; }   /* room for three lines on every page, so the carousel sits at one height */
   .x { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 8px; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
   .x:hover, .x:focus-visible, .x[aria-current] { color: var(--fg); outline: none; }
   .nav { display: flex; align-items: center; justify-content: center; }   /* a carousel: Box, Unclench, Hexagon, round and round */

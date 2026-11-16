@@ -28,8 +28,8 @@
     padding: 16px;
     -webkit-tap-highlight-color: transparent;
   }
-  main { width: min(100%, 420px); display: grid; gap: 24px; justify-items: center; text-align: center; }
-  h1 { font-size: 14px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+  main { width: min(100%, 420px); display: grid; gap: 36px; justify-items: center; text-align: center; }
+  h1 { font-size: 13px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
 
   .box { position: relative; width: min(72vw, 300px); aspect-ratio: 1; cursor: pointer; user-select: none; }
   .box svg { width: 100%; height: 100%; display: block; overflow: visible; }
@@ -45,7 +45,7 @@
   button {
     font: inherit; font-size: 14px; border-radius: 0; color: var(--fg); background: none;
     font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
-    border: 2px solid var(--fg); padding: 10px 28px; cursor: pointer;
+    border: 2px solid var(--fg); padding: 10px 30px; cursor: pointer;
   }
   button:hover, button:focus-visible { background: var(--fg); color: var(--bg); outline: none; }
 
@@ -65,7 +65,8 @@
   .snd[aria-pressed="true"] .word { color: var(--ink); text-shadow: 0 0 12px hsl(var(--h) 80% 60% / .7); }
 
 
-  .hint { color: var(--muted); font-size: 14px; }
+  #btn { min-width: 140px; } #snd { min-width: 128px; }                      /* same on every page: the label changes, the button and the switch do not move */
+  .hint { color: var(--muted); font-size: 14px; min-height: 4.2em; }   /* room for three lines on every page, so the carousel sits at one height */
   /* the way to the other instrument: one grey word, last on the page */
   .x { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 8px; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
   .x:hover, .x:focus-visible, .x[aria-current] { color: var(--fg); outline: none; }

@@ -58,7 +58,8 @@
   }
   button:hover, button:focus-visible { opacity: .85; outline: none; }
 
-  .hint { color: var(--muted); font-size: 14px; }
+  #btn { min-width: 140px; } #snd { min-width: 128px; }                      /* same on every page: the label changes, the button and the switch do not move */
+  .hint { color: var(--muted); font-size: 14px; min-height: 4.2em; }   /* room for three lines on every page, so the carousel sits at one height */
   /* the way to the other instrument: one grey word, last on the page */
   .x { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 8px; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
   .x:hover, .x:focus-visible, .x[aria-current] { color: var(--fg); outline: none; }

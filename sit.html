@@ -30,7 +30,7 @@
 
   /* the square holds still: it is the seat. The dot walks its edge once over the whole sitting. */
   .box {
-    position: relative; width: min(76vw, 310px); aspect-ratio: 1; cursor: pointer; user-select: none;
+    position: relative; width: min(72vw, 300px); aspect-ratio: 1; cursor: pointer; user-select: none;
     background: hsl(var(--h) 60% calc(var(--l) * 1%));
     box-shadow: 0 0 90px hsl(var(--h) 60% calc(var(--l) * 1%) / var(--glow));
   }
@@ -47,7 +47,8 @@
     border: 0; background: var(--fg); color: var(--bg); padding: 12px 32px; cursor: pointer; border-radius: 0;
   }
   button:hover, button:focus-visible { opacity: .85; outline: none; }
-  .hint { color: var(--muted); font-size: 14px; }
+  #btn { min-width: 140px; } #snd { min-width: 128px; }                      /* same on every page: the label changes, the button and the switch do not move */
+  .hint { color: var(--muted); font-size: 14px; min-height: 4.2em; }   /* room for three lines on every page, so the carousel sits at one height */
   .x { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 8px; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
   .x:hover, .x:focus-visible, .x[aria-current] { color: var(--fg); outline: none; }
   .nav { display: flex; align-items: center; justify-content: center; }   /* a carousel: Box, Unclench, Hexagon, Sit, round and round */
@@ -94,7 +95,7 @@
     <button id="btn" type="button">Start</button>
     <button id="snd" type="button" class="snd" aria-pressed="true"><span class="sq"></span><span class="word"><span>Voice </span><span class="on">on</span><span class="off">off</span></span></button>
   </div>
-  <p class="hint">This device's own voice reads each line; the words are on the square either way. The aim is to stay, not to make it go. Space starts or pauses.</p>
+  <p class="hint">A voice reads each line; the words are on the square too. The aim is to stay, not to make it go.</p>
   <nav class="nav" aria-label="Instruments"><a class="x" href="hexagon.html" aria-label="Previous: Hexagon">←</a><span class="x" aria-current="page">Sit</span><a class="x" href="index.html" aria-label="Next: Box">→</a></nav>
 </main>
 
