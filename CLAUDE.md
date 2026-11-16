@@ -51,11 +51,17 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   The old 220 Hz breath tone (a fifth) buzzed on the phone and is gone. Gallery: https://claude.ai/artifact/3jC8SKcGoHdXojwGqZamNs
 
 - Switching pages (10 Nov): every page ends with the same carousel `nav.nav`: left arrow, the page's name (lit, fixed width),
-  right arrow. Order Box, Unclench, Hexagon, wrapping both ways. This replaces the single grey cross link.
+  right arrow. Order Box, Unclench, Hexagon, Sit, wrapping both ways. This replaces the single grey cross link.
 - `hexagon.html` (10 Nov): a hexagon of light, the dot walks one side every 4 s, 5 laps = 2:00. A tone (sine + octave +
   second octave, level 0.35) slides into a new note at each corner: A3, B4, G3, C#4, G3, C#4 (`NOTES`, `GLIDE` 0.5 s).
   The light is brighter on higher notes. No corner clicks; the switch clicks. Linked from `index.html`. Built by
   `sounds/recipe/hexagon.py`.
+- `sit.html` (16 Nov): spoken guidance for sitting with anxiety, 15 lines in 5 parts (Body, Facts, Mind, Kind, Here),
+  2:40. The script is `LINES` ([part, line, seconds]); it follows Jenny Matthews, LMFT, "How to sit with anxiety"
+  (stateofmindtherapy.com), reworded. The voice is the device's own (`speechSynthesis`, local English voice preferred,
+  `RATE` 0.85): no audio shipped, works offline where the device has a voice. Each line is also on the square. The square
+  holds still; the dot walks its edge once. A resume goes back to the start of the line. The switch reads "Voice on/off"
+  and shares `instruments.sound`. The aim is to stay with it, not to make it go; the page never promises relief.
 
 ## Sound rules (from the 5 Nov research; full page https://claude.ai/artifact/BEDzSjEsEmwnASBvgEMgJY)
 
@@ -81,6 +87,8 @@ tone verified in Chrome on the live URLs. Local test server, if needed: `python 
 (8765 is taken by the materials project); none running now.
 
 ## Next step
+
+16 Nov: `sit.html` is live; Vlad has not heard the device voice on the S22 yet (rate, pacing and wording are first guesses).
 
 10 Nov: `index.html` has the 220+440 breath tone back (rolled back twice on 6 Nov; hums are off both pages). Vlad is choosing
 among breathing hums 5/6/9 (https://claude.ai/artifact/5TYzihGFusRA2t7PjhVGTY) and has not heard `hexagon.html` on the phone yet.
