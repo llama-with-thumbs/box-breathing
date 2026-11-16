@@ -53,8 +53,10 @@
   .x:hover, .x:focus-visible, .x[aria-current] { color: var(--fg); outline: none; }
   .nav { display: flex; align-items: center; justify-content: center; }   /* a carousel: Box, Unclench, Hexagon, Sit, round and round */
   .nav .x { justify-content: center; }
-  .nav a.x { min-width: 44px; font-size: 16px; letter-spacing: 0; }
+  .nav a.x { min-width: 56px; font-size: 16px; letter-spacing: 0; }
   .nav span.x { width: 11em; }
+  .nav .x { gap: 8px; }
+  .nav svg { width: 14px; height: 14px; fill: currentColor; flex: none; }   /* each exercise's own shape, small: the neighbours show as theirs */
 
   .row { display: flex; gap: 20px; align-items: center; justify-content: center; flex-wrap: wrap; }
   .snd { display: inline-flex; align-items: center; gap: 12px; padding: 8px 4px; min-height: 44px; background: none; border: 0; color: var(--muted); letter-spacing: .1em; }
@@ -97,7 +99,7 @@
     <button id="snd" type="button" class="snd" aria-pressed="true"><span class="sq"></span><span class="word"><span>Voice </span><span class="on" id="vn">1</span><span class="off">off</span></span></button>
   </div>
   <p class="hint">A voice reads each line; the switch changes it or turns it off. The aim is to stay, not to make it go.</p>
-  <nav class="nav" aria-label="Instruments"><a class="x" href="hexagon.html" aria-label="Previous: Hexagon">←</a><span class="x" aria-current="page">Sit</span><a class="x" href="index.html" aria-label="Next: Box">→</a></nav>
+  <nav class="nav" aria-label="Instruments"><a class="x" href="hexagon.html" aria-label="Previous: Hexagon">←<svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,2 91.6,26 91.6,74 50,98 8.4,74 8.4,26"/></svg></a><span class="x" aria-current="page"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,4 98,39 79.7,95 20.3,95 2,39"/></svg>Sit</span><a class="x" href="index.html" aria-label="Next: Box"><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="8" y="8" width="84" height="84"/></svg>→</a></nav>
 </main>
 
 <script>

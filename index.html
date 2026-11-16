@@ -65,8 +65,10 @@
   .x:hover, .x:focus-visible, .x[aria-current] { color: var(--fg); outline: none; }
   .nav { display: flex; align-items: center; justify-content: center; }   /* a carousel: Box, Unclench, Hexagon, round and round */
   .nav .x { justify-content: center; }
-  .nav a.x { min-width: 44px; font-size: 16px; letter-spacing: 0; }   /* the arrows: thumb-sized, always in the same place */
+  .nav a.x { min-width: 56px; font-size: 16px; letter-spacing: 0; }   /* the arrows: thumb-sized, always in the same place */
   .nav span.x { width: 11em; }                                          /* the name: fixed width, so the arrows do not move between pages */
+  .nav .x { gap: 8px; }
+  .nav svg { width: 14px; height: 14px; fill: currentColor; flex: none; }   /* each exercise's own shape, small: the neighbours show as theirs */
 
   .row { display: flex; gap: 20px; align-items: center; justify-content: center; flex-wrap: wrap; }
   /* sound switch: a small square of light, the word lit by it */
@@ -110,7 +112,7 @@
     <button id="snd" type="button" class="snd" aria-pressed="true"><span class="sq"></span><span class="word"><span>Sound </span><span class="on">on</span><span class="off">off</span></span></button>
   </div>
   <p class="hint">Inhale 4 · Hold 4 · Exhale 4 · Hold 4. Space starts or pauses. The tone rises as you breathe in; a click marks each corner.</p>
-  <nav class="nav" aria-label="Instruments"><a class="x" href="sit.html" aria-label="Previous: Sit">←</a><span class="x" aria-current="page">Box</span><a class="x" href="unclench.html" aria-label="Next: Unclench">→</a></nav>
+  <nav class="nav" aria-label="Instruments"><a class="x" href="sit.html" aria-label="Previous: Sit">←<svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,4 98,39 79.7,95 20.3,95 2,39"/></svg></a><span class="x" aria-current="page"><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="8" y="8" width="84" height="84"/></svg>Box</span><a class="x" href="unclench.html" aria-label="Next: Unclench"><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="9" y="9" width="82" height="82" fill="none" stroke="currentColor" stroke-width="10"/><rect x="35" y="35" width="30" height="30"/></svg>→</a></nav>
 </main>
 
 <script>
