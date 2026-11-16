@@ -29,8 +29,10 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   (Turrell): no frame, brightens on inhale, dims on exhale, hue drifts 215→325→215 over
   the session, white dot walks the edge. Waking Up gave: air, light type, one filled button.
 
-- `unclench.html`: 6 steps with suggested seconds (`STEPS`), total 120 s. The frame is a room seen from its doorway
-  (16 Nov): four faint walls (`room(k)`) run to the red square, the back wall, which comes closer and gains colour. The square
+- `unclench.html`: 6 steps with suggested seconds (`STEPS`), total 120 s. The frame is a window onto a room (16 Nov,
+  variation 1 of https://claude.ai/artifact/HWx46XJyvrKQG7E4aV8DEc): black walls, the room wider than the window (`MX` 12,
+  `MY` 3) so its hairline edges leave through the sides, not the corners; the red back wall comes closer (`room(k)`) and
+  the walls take a faint red (`GLOW`) only on the last stretch. The text in the room is pale in both themes. The square
   grows from `SIZE0` to 1 over the step's time; when it is up a ping sounds and the next step
   starts by itself (Vlad, 5 Nov); a tap moves on early.
   Sound is Web Audio (220 Hz ping at each step change; 330→165 Hz slide on
@@ -52,7 +54,8 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   The old 220 Hz breath tone (a fifth) buzzed on the phone and is gone. Gallery: https://claude.ai/artifact/3jC8SKcGoHdXojwGqZamNs
 
 - Switching pages (10 Nov): every page ends with the same carousel `nav.nav`: left arrow, the page's name (lit, fixed width),
-  right arrow. Order Box, Unclench, Hexagon, Sit, wrapping both ways. This replaces the single grey cross link.
+  right arrow. Order Box, Unclench, Hexagon, Sit, wrapping both ways. Each has a contour pictogram of its shape (16 Nov):
+  neighbour's shape, arrow, current shape + name, arrow, neighbour's shape. Pictograms appear only here. This replaces the single grey cross link.
 - `hexagon.html` (10 Nov): a hexagon of light, the dot walks one side every 4 s, 5 laps = 2:00. A tone (sine + octave +
   second octave, level 0.35) slides into a new note at each corner: A3, B4, G3, C#4, G3, C#4 (`NOTES`, `GLIDE` 0.5 s).
   The light is brighter on higher notes. No corner clicks; the switch clicks. Linked from `index.html`. Built by

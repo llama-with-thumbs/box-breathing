@@ -34,10 +34,13 @@
   .box { position: relative; width: min(72vw, 300px); aspect-ratio: 1; cursor: pointer; user-select: none; }
   .box svg { width: 100%; height: 100%; display: block; overflow: visible; }
   .frame { fill: none; stroke: var(--fg); stroke-width: 2; }
-  .inner { fill: var(--accent); fill-opacity: calc(.7 + .3 * var(--s, .12)); transform-origin: 50% 50%; transform: scale(var(--s, .12)); }   /* the back wall: fuller in colour as it nears */
-  /* the room: ceiling, two side walls, floor, drawn from the doorway (the frame) to the back wall. Their edges are the room's inner edges. */
-  .wall { fill: var(--fg); stroke: var(--fg); stroke-opacity: .22; stroke-width: .5; stroke-linejoin: round; }
-  .wall.t { fill-opacity: .02; } .wall.s { fill-opacity: .055; } .wall.b { fill-opacity: .11; }
+  /* the room, seen through a window smaller than it is: black walls, hairline edges that leave through the sides of
+     the frame, the red back wall coming closer. The walls take a little of its red only when it is near. */
+  .box { --wall: #070707; --pale: #f0ece4; }
+  .room { fill: var(--wall); }
+  .inner { fill: var(--accent); }
+  .edge { stroke: var(--pale); stroke-opacity: .16; stroke-width: .5; }
+  .label { color: var(--pale); }
 
   .label { position: absolute; inset: 0; display: grid; place-content: center; gap: 10px; padding: 18px; pointer-events: none; }
   .part { font-size: 14px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
@@ -77,8 +80,8 @@
   .nav .x { justify-content: center; }
   .nav a.x { min-width: 56px; font-size: 16px; letter-spacing: 0; }   /* the arrows: thumb-sized, always in the same place */
   .nav span.x { width: 11em; }                                          /* the name: fixed width, so the arrows do not move between pages */
-  .nav .x { gap: 8px; }
-  .nav svg { width: 14px; height: 14px; fill: currentColor; flex: none; }   /* each exercise's own shape, small: the neighbours show as theirs */
+  .nav .x { gap: 10px; }
+  .nav svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 9; flex: none; overflow: visible; }   /* each exercise's own shape, as a contour */
 
   @media (prefers-reduced-motion: reduce) { .inner { transition: none; } }
 </style>
@@ -89,11 +92,19 @@
 
   <div class="box" id="box" title="Tap to begin or move on">
     <svg viewBox="0 0 100 100" role="img" aria-label="A room seen from its doorway; the red back wall comes closer with each step until it fills the frame">
-      <polygon class="wall t" id="wt" points="0,0 100,0 56,44 44,44"/>
-      <polygon class="wall s" id="wr" points="100,0 100,100 56,56 56,44"/>
-      <polygon class="wall b" id="wb" points="100,100 0,100 44,56 56,56"/>
-      <polygon class="wall s" id="wl" points="0,100 0,0 44,44 44,56"/>
-      <rect class="inner" id="inner" x="0" y="0" width="100" height="100"/>
+      <defs>
+        <clipPath id="win"><rect x="0" y="0" width="100" height="100"/></clipPath>
+        <linearGradient id="g0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient>
+        <linearGradient id="g1" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient>
+        <linearGradient id="g2" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient>
+        <linearGradient id="g3" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient>
+      </defs>
+      <g clip-path="url(#win)">
+        <rect class="room" x="0" y="0" width="100" height="100"/>
+        <polygon id="w0" fill="url(#g0)"/><polygon id="w1" fill="url(#g1)"/><polygon id="w2" fill="url(#g2)"/><polygon id="w3" fill="url(#g3)"/>
+        <line class="edge" id="e0"/><line class="edge" id="e1"/><line class="edge" id="e2"/><line class="edge" id="e3"/>
+        <rect class="inner" id="inner"/>
+      </g>
       <rect class="frame" x="0" y="0" width="100" height="100"/>
     </svg>
     <div class="label" aria-live="polite">
@@ -112,7 +123,7 @@
     <button id="snd" type="button" class="snd" aria-pressed="true"><span class="sq"></span><span class="word"><span>Sound </span><span class="on">on</span><span class="off">off</span></span></button>
   </div>
   <p class="hint">A ping marks each step. Tap to move on early. Space works too.</p>
-  <nav class="nav" aria-label="Instruments"><a class="x" href="index.html" aria-label="Previous: Box">←<svg viewBox="0 0 100 100" aria-hidden="true"><rect x="8" y="8" width="84" height="84"/></svg></a><span class="x" aria-current="page"><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="9" y="9" width="82" height="82" fill="none" stroke="currentColor" stroke-width="10"/><rect x="35" y="35" width="30" height="30"/></svg>Unclench</span><a class="x" href="hexagon.html" aria-label="Next: Hexagon"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,2 91.6,26 91.6,74 50,98 8.4,74 8.4,26"/></svg>→</a></nav>
+  <nav class="nav" aria-label="Instruments"><a class="x" href="index.html" aria-label="Previous: Box"><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="8" y="8" width="84" height="84"/></svg>←</a><span class="x" aria-current="page"><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="8" y="8" width="84" height="84"/><rect x="38" y="38" width="24" height="24"/></svg>Unclench</span><a class="x" href="hexagon.html" aria-label="Next: Hexagon">→<svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5"/></svg></a></nav>
 </main>
 
 <script>
@@ -134,15 +145,27 @@
 
   const $ = id => document.getElementById(id);
   const inner = $('inner'), partEl = $('part'), askEl = $('ask');
-  const walls = ['wt', 'wr', 'wb', 'wl'].map($);
-  function room(k) {                                      // k: size of the back wall, SIZE0 far .. 1 here
-    inner.style.setProperty('--s', k);
-    const a = (50 - 50 * k).toFixed(2), b = (50 + 50 * k).toFixed(2);
-    walls[0].setAttribute('points', `0,0 100,0 ${b},${a} ${a},${a}`);
-    walls[1].setAttribute('points', `100,0 100,100 ${b},${b} ${b},${a}`);
-    walls[2].setAttribute('points', `100,100 0,100 ${a},${b} ${b},${b}`);
-    walls[3].setAttribute('points', `0,100 0,0 ${a},${a} ${a},${b}`);
+  // the room is wider than the window (MX, MY per side, in frame units), so its edges miss the frame's corners
+  const MX = 12, MY = 3, GLOW = 0.10, REACH = 0.22;
+  const walls = [0, 1, 2, 3].map(i => $('w' + i)), edges = [0, 1, 2, 3].map(i => $('e' + i)), grads = [0, 1, 2, 3].map(i => $('g' + i));
+  function room(k) {                                      // k: how near the back wall is, SIZE0 far .. 1 here (it fills the window)
+    const sc = 50 / (50 + Math.min(MX, MY)), hx = k * (50 + MX) * sc, hy = k * (50 + MY) * sc;
+    const x0 = 50 - hx, x1 = 50 + hx, y0 = 50 - hy, y1 = 50 + hy, ox = -MX, Ox = 100 + MX, oy = -MY, Oy = 100 + MY;
+    const C = [[x0, y0], [x1, y0], [x1, y1], [x0, y1]], R = [[ox, oy], [Ox, oy], [Ox, Oy], [ox, Oy]];   // back wall corners, room corners
+    const far = [[50, y0], [x1, 50], [50, y1], [x0, 50]], near = [[50, oy], [Ox, 50], [50, Oy], [ox, 50]];
+    const t = Math.max(0, Math.min(1, (k - 0.6) / 0.3)), red = GLOW * t * t * (3 - 2 * t);               // red only on the last stretch
+    for (let i = 0; i < 4; i++) {
+      const j = (i + 1) % 4, f = far[i], n = near[i], g = grads[i], e = edges[i];
+      walls[i].setAttribute('points', [R[i], R[j], C[j], C[i]].map(p => p.map(v => v.toFixed(2)).join(',')).join(' '));
+      g.setAttribute('x1', f[0]); g.setAttribute('y1', f[1]);
+      g.setAttribute('x2', f[0] + (n[0] - f[0]) * REACH); g.setAttribute('y2', f[1] + (n[1] - f[1]) * REACH);
+      g.firstElementChild.setAttribute('stop-opacity', red.toFixed(3));
+      e.setAttribute('x1', C[i][0]); e.setAttribute('y1', C[i][1]); e.setAttribute('x2', R[i][0]); e.setAttribute('y2', R[i][1]);
+    }
+    inner.setAttribute('x', x0); inner.setAttribute('y', y0); inner.setAttribute('width', x1 - x0); inner.setAttribute('height', y1 - y0);
+    inner.setAttribute('fill-opacity', (0.7 + 0.3 * k).toFixed(3));
   }
+  room(SIZE0);
   const whereEl = $('where'), leftEl = $('left'), btn = $('btn'), box = $('box');
   const root = document.documentElement;
 
