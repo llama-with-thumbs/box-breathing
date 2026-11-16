@@ -55,7 +55,8 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
 
 - Switching pages (10 Nov): every page ends with the same carousel `nav.nav`: left arrow, the page's name (lit, fixed width),
   right arrow. Order Box, Unclench, Hexagon, Sit, wrapping both ways. Each has a contour pictogram of its shape (16 Nov):
-  neighbour's shape, arrow, current shape + name, arrow, neighbour's shape. Pictograms appear only here. This replaces the single grey cross link.
+  neighbour's shape and name (small), arrow, current shape + name, arrow, neighbour's name and shape. The middle is 116 px
+  on every page so the arrows never move. Pictograms appear only here. This replaces the single grey cross link.
 - `hexagon.html` (10 Nov): a hexagon of light, the dot walks one side every 4 s, 5 laps = 2:00. A tone (sine + octave +
   second octave, level 0.35) slides into a new note at each corner: A3, B4, G3, C#4, G3, C#4 (`NOTES`, `GLIDE` 0.5 s).
   The light is brighter on higher notes. No corner clicks; the switch clicks. Linked from `index.html`. Built by

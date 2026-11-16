@@ -51,11 +51,16 @@
   .hint { color: var(--muted); font-size: 14px; min-height: 4.2em; }   /* room for three lines on every page, so the carousel sits at one height */
   .x { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 8px; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
   .x:hover, .x:focus-visible, .x[aria-current] { color: var(--fg); outline: none; }
-  .nav { display: flex; align-items: center; justify-content: center; }   /* a carousel: Box, Unclench, Hexagon, Sit, round and round */
-  .nav .x { justify-content: center; }
-  .nav a.x { min-width: 56px; font-size: 16px; letter-spacing: 0; }
-  .nav span.x { width: 11em; }
-  .nav .x { gap: 10px; }
+  /* the switch: neighbour's shape and name, arrow, this page's shape and name, arrow, neighbour's name and shape.
+     The middle is 116 px on every page and the sides share the rest, so the arrows never move. */
+  .nav { display: grid; grid-template-columns: minmax(0, 1fr) 116px minmax(0, 1fr); align-items: center; width: 100%; }
+  .nav .x { gap: 6px; padding-left: 0; padding-right: 0; }
+  .nav span.x { justify-content: center; }
+  .nav a.x { min-width: 0; font-size: 9.5px; letter-spacing: .04em; }
+  .nav a.x:first-child { justify-content: flex-end; }
+  .nav a.x:last-child { justify-content: flex-start; }
+  .nav .n { min-width: 0; overflow: hidden; white-space: nowrap; }     /* a long name on a narrow phone is cut at its outer end */
+  .nav .ar { font-size: 16px; letter-spacing: 0; flex: none; padding: 0 1px; }
   .nav svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 9; flex: none; overflow: visible; }   /* each exercise's own shape, as a contour */
 
   .row { display: flex; gap: 20px; align-items: center; justify-content: center; flex-wrap: wrap; }
@@ -99,7 +104,7 @@
     <button id="snd" type="button" class="snd" aria-pressed="true"><span class="sq"></span><span class="word"><span>Voice </span><span class="on" id="vn">1</span><span class="off">off</span></span></button>
   </div>
   <p class="hint">A voice reads each line; the switch changes it or turns it off. The aim is to stay, not to make it go.</p>
-  <nav class="nav" aria-label="Instruments"><a class="x" href="hexagon.html" aria-label="Previous: Hexagon"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5"/></svg>←</a><span class="x" aria-current="page"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,8 94,40 77,92 23,92 6,40"/></svg>Sit</span><a class="x" href="index.html" aria-label="Next: Box">→<svg viewBox="0 0 100 100" aria-hidden="true"><rect x="8" y="8" width="84" height="84"/></svg></a></nav>
+  <nav class="nav" aria-label="Instruments"><a class="x" href="hexagon.html" aria-label="Previous: Hexagon"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5"/></svg><span class="n">Hexagon</span><span class="ar">←</span></a><span class="x" aria-current="page"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,8 94,40 77,92 23,92 6,40"/></svg>Sit</span><a class="x" href="index.html" aria-label="Next: Box"><span class="ar">→</span><span class="n">Box</span><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="8" y="8" width="84" height="84"/></svg></a></nav>
 </main>
 
 <script>
