@@ -62,7 +62,7 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   of every line embedded as mp3 (about 570 KB): voice 1 = Heart + Nicole blend (gallery 6), voice 2 = Heart (gallery 2),
   both two semitones down, speed 0.75. Each line is spoken phrase by phrase with hand-set silences between
   (`RHYTHM` in the recipe: lists get 0.7-0.9 s between words, paired sentences 0.7-1.3 s, run-on thoughts none). The switch cycles Voice 1, Voice 2, Voice off (`sit.voice`, and the shared
-  `instruments.sound`). Each line is also on the square. The square holds still; the dot walks its edge once. A resume
+  `instruments.sound`). Each line is also on the shape: a pentagon (16 Nov), one side per part; the dot walks a side while its part is spoken. A resume
   goes back to the start of the line. The aim is to stay with it, not to make it go; the page never promises relief.
   Recipe: `sounds/recipe/sitvoice.py` (needs `pip install kokoro-onnx` and the two model files; changing a line in
   `LINES` means running it again). Voice gallery: https://claude.ai/artifact/JzeNk1z3jpkKqXdDuPXkYd
