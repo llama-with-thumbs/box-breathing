@@ -57,10 +57,11 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   The light is brighter on higher notes. No corner clicks; the switch clicks. Linked from `index.html`. Built by
   `sounds/recipe/hexagon.py`.
 - `sit.html` (16 Nov): spoken guidance for sitting with anxiety, 15 lines in 5 parts (Body, Facts, Mind, Kind, Here),
-  2:40. The script is `LINES` ([part, line, seconds]); it follows Jenny Matthews, LMFT, "How to sit with anxiety"
+  2:44. The script is `LINES` ([part, line, seconds]); it follows Jenny Matthews, LMFT, "How to sit with anxiety"
   (stateofmindtherapy.com), reworded. The voice is recorded, not the device's (16 Nov): Kokoro (Apache-2.0), two takes
   of every line embedded as mp3 (about 570 KB): voice 1 = Heart + Nicole blend (gallery 6), voice 2 = Heart (gallery 2),
-  both two semitones down, speed 0.85. The switch cycles Voice 1, Voice 2, Voice off (`sit.voice`, and the shared
+  both two semitones down, speed 0.75. Each line is spoken phrase by phrase with hand-set silences between
+  (`RHYTHM` in the recipe: lists get 0.7-0.9 s between words, paired sentences 0.7-1.3 s, run-on thoughts none). The switch cycles Voice 1, Voice 2, Voice off (`sit.voice`, and the shared
   `instruments.sound`). Each line is also on the square. The square holds still; the dot walks its edge once. A resume
   goes back to the start of the line. The aim is to stay with it, not to make it go; the page never promises relief.
   Recipe: `sounds/recipe/sitvoice.py` (needs `pip install kokoro-onnx` and the two model files; changing a line in
