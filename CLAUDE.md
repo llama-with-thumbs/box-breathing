@@ -58,10 +58,15 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   `sounds/recipe/hexagon.py`.
 - `sit.html` (16 Nov): spoken guidance for sitting with anxiety, 15 lines in 5 parts (Body, Facts, Mind, Kind, Here),
   2:40. The script is `LINES` ([part, line, seconds]); it follows Jenny Matthews, LMFT, "How to sit with anxiety"
-  (stateofmindtherapy.com), reworded. The voice is the device's own (`speechSynthesis`, local English voice preferred,
-  `RATE` 0.85): no audio shipped, works offline where the device has a voice. Each line is also on the square. The square
-  holds still; the dot walks its edge once. A resume goes back to the start of the line. The switch reads "Voice on/off"
-  and shares `instruments.sound`. The aim is to stay with it, not to make it go; the page never promises relief.
+  (stateofmindtherapy.com), reworded. The voice is recorded, not the device's (16 Nov): Kokoro (Apache-2.0), two takes
+  of every line embedded as mp3 (about 570 KB): voice 1 = Heart + Nicole blend (gallery 6), voice 2 = Heart (gallery 2),
+  both two semitones down, speed 0.85. The switch cycles Voice 1, Voice 2, Voice off (`sit.voice`, and the shared
+  `instruments.sound`). Each line is also on the square. The square holds still; the dot walks its edge once. A resume
+  goes back to the start of the line. The aim is to stay with it, not to make it go; the page never promises relief.
+  Recipe: `sounds/recipe/sitvoice.py` (needs `pip install kokoro-onnx` and the two model files; changing a line in
+  `LINES` means running it again). Voice gallery: https://claude.ai/artifact/JzeNk1z3jpkKqXdDuPXkYd
+- Geometry (16 Nov): the square (72vw, 300 px), gap 36, `#btn` 140 px, `#snd` 128 px and a three-line `.hint` are the
+  same on all four pages, so nothing moves when switching. Keep them equal on any new page.
 
 ## Sound rules (from the 5 Nov research; full page https://claude.ai/artifact/BEDzSjEsEmwnASBvgEMgJY)
 
@@ -88,7 +93,8 @@ tone verified in Chrome on the live URLs. Local test server, if needed: `python 
 
 ## Next step
 
-16 Nov: `sit.html` is live; Vlad has not heard the device voice on the S22 yet (rate, pacing and wording are first guesses).
+16 Nov: `sit.html` is live with the two recorded voices Vlad chose (6 first, 2 second); pacing and wording are still first guesses,
+unheard on the S22. The Kokoro model sits in that session's scratchpad and will need downloading again (about 330 MB).
 
 10 Nov: `index.html` has the 220+440 breath tone back (rolled back twice on 6 Nov; hums are off both pages). Vlad is choosing
 among breathing hums 5/6/9 (https://claude.ai/artifact/5TYzihGFusRA2t7PjhVGTY) and has not heard `hexagon.html` on the phone yet.
