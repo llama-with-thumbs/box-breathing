@@ -29,7 +29,8 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   (Turrell): no frame, brightens on inhale, dims on exhale, hue drifts 215→325→215 over
   the session, white dot walks the edge. Waking Up gave: air, light type, one filled button.
 
-- `unclench.html`: 6 steps with suggested seconds (`STEPS`), total 120 s. The square
+- `unclench.html`: 6 steps with suggested seconds (`STEPS`), total 120 s. The frame is a room seen from its doorway
+  (16 Nov): four faint walls (`room(k)`) run to the red square, the back wall, which comes closer and gains colour. The square
   grows from `SIZE0` to 1 over the step's time; when it is up a ping sounds and the next step
   starts by itself (Vlad, 5 Nov); a tap moves on early.
   Sound is Web Audio (220 Hz ping at each step change; 330→165 Hz slide on

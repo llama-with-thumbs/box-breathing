@@ -34,7 +34,10 @@
   .box { position: relative; width: min(72vw, 300px); aspect-ratio: 1; cursor: pointer; user-select: none; }
   .box svg { width: 100%; height: 100%; display: block; overflow: visible; }
   .frame { fill: none; stroke: var(--fg); stroke-width: 2; }
-  .inner { fill: var(--accent); transform-origin: 50% 50%; transform: scale(var(--s, .12)); }
+  .inner { fill: var(--accent); fill-opacity: calc(.7 + .3 * var(--s, .12)); transform-origin: 50% 50%; transform: scale(var(--s, .12)); }   /* the back wall: fuller in colour as it nears */
+  /* the room: ceiling, two side walls, floor, drawn from the doorway (the frame) to the back wall. Their edges are the room's inner edges. */
+  .wall { fill: var(--fg); stroke: var(--fg); stroke-opacity: .22; stroke-width: .5; stroke-linejoin: round; }
+  .wall.t { fill-opacity: .02; } .wall.s { fill-opacity: .055; } .wall.b { fill-opacity: .11; }
 
   .label { position: absolute; inset: 0; display: grid; place-content: center; gap: 10px; padding: 18px; pointer-events: none; }
   .part { font-size: 14px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
@@ -85,9 +88,13 @@
   <h1>Unclench · 2 minutes</h1>
 
   <div class="box" id="box" title="Tap to begin or move on">
-    <svg viewBox="0 0 100 100" role="img" aria-label="A small red square inside a frame; it grows one size per step until it fills the frame">
-      <rect class="frame" x="0" y="0" width="100" height="100"/>
+    <svg viewBox="0 0 100 100" role="img" aria-label="A room seen from its doorway; the red back wall comes closer with each step until it fills the frame">
+      <polygon class="wall t" id="wt" points="0,0 100,0 56,44 44,44"/>
+      <polygon class="wall s" id="wr" points="100,0 100,100 56,56 56,44"/>
+      <polygon class="wall b" id="wb" points="100,100 0,100 44,56 56,56"/>
+      <polygon class="wall s" id="wl" points="0,100 0,0 44,44 44,56"/>
       <rect class="inner" id="inner" x="0" y="0" width="100" height="100"/>
+      <rect class="frame" x="0" y="0" width="100" height="100"/>
     </svg>
     <div class="label" aria-live="polite">
       <div class="part" id="part">Ready</div>
@@ -127,6 +134,15 @@
 
   const $ = id => document.getElementById(id);
   const inner = $('inner'), partEl = $('part'), askEl = $('ask');
+  const walls = ['wt', 'wr', 'wb', 'wl'].map($);
+  function room(k) {                                      // k: size of the back wall, SIZE0 far .. 1 here
+    inner.style.setProperty('--s', k);
+    const a = (50 - 50 * k).toFixed(2), b = (50 + 50 * k).toFixed(2);
+    walls[0].setAttribute('points', `0,0 100,0 ${b},${a} ${a},${a}`);
+    walls[1].setAttribute('points', `100,0 100,100 ${b},${b} ${b},${a}`);
+    walls[2].setAttribute('points', `100,100 0,100 ${a},${b} ${b},${b}`);
+    walls[3].setAttribute('points', `0,100 0,0 ${a},${a} ${a},${b}`);
+  }
   const whereEl = $('where'), leftEl = $('left'), btn = $('btn'), box = $('box');
   const root = document.documentElement;
 
@@ -257,7 +273,7 @@
     inStep += dt; actual += dt;
     const s = STEPS[step];
     const f = Math.min(1, inStep / s.secs);
-    inner.style.setProperty('--s', sizeAt(step) + (sizeAt(step + 1) - sizeAt(step)) * f);
+    room(sizeAt(step) + (sizeAt(step + 1) - sizeAt(step)) * f);
     leftEl.textContent = fmt(TOTAL - spent - Math.min(inStep, s.secs));
     root.style.setProperty('--h', 215 + 110 * (0.5 - 0.5 * Math.cos(2 * Math.PI * (spent + Math.min(inStep, s.secs)) / TOTAL)));
     if (s.breath) breathText(s);
@@ -276,7 +292,7 @@
     spent += STEPS[step].secs;
     step += 1; inStep = 0; rang = false; exhale = -1;
     if (step >= N) { finish(); return; }
-    inner.style.setProperty('--s', sizeAt(step));
+    room(sizeAt(step));
     show();
   }
 
@@ -286,7 +302,7 @@
   function finish() {
     pause();
     step = N;
-    inner.style.setProperty('--s', 1);
+    room(1);
     partEl.textContent = 'Done';
     askEl.textContent = 'The next thing is yours to choose.';
     whereEl.textContent = `You took ${fmt(actual)}`;
@@ -295,7 +311,7 @@
   }
 
   function reset() {
-    inner.style.setProperty('--s', SIZE0);
+    room(SIZE0);
     root.style.setProperty('--h', 215);
     partEl.textContent = 'Ready';
     askEl.textContent = 'Put the day down for two minutes.';
