@@ -72,6 +72,10 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   `LINES` means running it again). Voice gallery: https://claude.ai/artifact/JzeNk1z3jpkKqXdDuPXkYd
 - Geometry (16 Nov): the square (72vw, 300 px), gap 36, `#btn` 140 px, `#snd` 128 px and a three-line `.hint` are the
   same on all four pages, so nothing moves when switching. Keep them equal on any new page.
+- Synthesizer (16 Nov): DawDreamer (`pip install dawdreamer`, GPL-3, about 40 MB) runs Faust physical models and the Zita
+  reverb offline from Python; it is to the sounds what Kokoro is to the voice. `sounds/recipe/synth.py` renders nine
+  candidates (bar, bowl, chime, drum, string, clay pot, rubbed glass, breath, organ hum); gallery
+  https://claude.ai/artifact/12oNzZJt6D6km7eRLyWeno. Nothing from it is on the pages yet.
 
 ## Sound rules (from the 5 Nov research; full page https://claude.ai/artifact/BEDzSjEsEmwnASBvgEMgJY)
 
