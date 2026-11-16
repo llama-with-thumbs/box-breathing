@@ -76,7 +76,9 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
 - Synthesizer (16 Nov): DawDreamer (`pip install dawdreamer`, GPL-3, about 40 MB) runs Faust physical models and the Zita
   reverb offline from Python; it is to the sounds what Kokoro is to the voice. `sounds/recipe/synth.py` renders nine
   candidates (bar, bowl, chime, drum, string, clay pot, rubbed glass, breath, organ hum); gallery
-  https://claude.ai/artifact/12oNzZJt6D6km7eRLyWeno. Nothing from it is on the pages yet.
+  https://claude.ai/artifact/12oNzZJt6D6km7eRLyWeno. Nothing from it is on the pages: Vlad parked all nine (16 Nov) for a later round of
+  adjustments. Suggested then: bowl for the Unclench step cue and the end of Sit, breath-in-a-tube for the Unclench exhale,
+  rubbed glass for the Box breath tone, plucked string for Hexagon; keep the recorded corner clicks. Do not apply unasked.
 
 ## Sound rules (from the 5 Nov research; full page https://claude.ai/artifact/BEDzSjEsEmwnASBvgEMgJY)
 
