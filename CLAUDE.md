@@ -54,7 +54,7 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   The old 220 Hz breath tone (a fifth) buzzed on the phone and is gone. Gallery: https://claude.ai/artifact/3jC8SKcGoHdXojwGqZamNs
 
 - Switching pages (10 Nov): every page ends with the same carousel `nav.nav`: left arrow, the page's name (lit, fixed width),
-  right arrow. Order Box, Unclench, Hexagon, Sit, wrapping both ways. Each has a contour pictogram of its shape (16 Nov):
+  right arrow. Order Box, Unclench, Hex, Sit, wrapping both ways (the page is named Hex since 18 Nov; the file stays hexagon.html). Each has a contour pictogram of its shape (16 Nov):
   neighbour's shape and name (small), arrow, current shape + name, arrow, neighbour's name and shape. The middle is 116 px
   on every page so the arrows never move. Pictograms appear only here. This replaces the single grey cross link.
 - `hexagon.html` (10 Nov): a hexagon of light, the dot walks one side every 4 s, 5 laps = 2:00. A tone (sine + octave +
