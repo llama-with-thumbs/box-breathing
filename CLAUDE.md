@@ -32,9 +32,10 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
 - `unclench.html`: 6 steps with suggested seconds (`STEPS`), total 120 s. The frame is a window onto a room (16 Nov,
   variation 1 of https://claude.ai/artifact/HWx46XJyvrKQG7E4aV8DEc): black walls, the room wider than the window (`MX` 12,
   `MY` 3) so its hairline edges leave through the sides, not the corners; the red back wall comes closer (`room(k)`) and
-  the walls take a faint red (`GLOW`) only on the last stretch. The text in the room is pale in both themes. The square
+  the walls take a faint red (`GLOW`) only on the last stretch. The text in the room is pale in both themes. The wall's red is its own (`--red`, hsl 4 100% 54%), and while running it
+  breathes once every 7 s by 3 % of lightness (`glow`, `PULSE`; still under reduced motion) (Vlad, 18 Nov, after Turrell). The square
   grows from `SIZE0` to 1 over the step's time; when it is up a ping sounds and the next step
-  starts by itself (Vlad, 5 Nov); a tap moves on early.
+  starts by itself (Vlad, 5 Nov). The button is Pause / Resume; nothing jumps a step (Vlad, 18 Nov).
   Sound is Web Audio (220 Hz ping at each step change; 330→165 Hz slide on
   each exhale), on by default, mute remembered in `localStorage` `unclench.sound`.
   No text input: Vlad asked for nothing to type.

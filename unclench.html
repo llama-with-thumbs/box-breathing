@@ -36,9 +36,9 @@
   .frame { fill: none; stroke: var(--fg); stroke-width: 2; }
   /* the room, seen through a window smaller than it is: black walls, hairline edges that leave through the sides of
      the frame, the red back wall coming closer. The walls take a little of its red only when it is near. */
-  .box { --wall: #070707; --pale: #f0ece4; }
+  .box { --wall: #070707; --pale: #f0ece4; --red: hsl(4 100% 54%); }   /* the wall's own red; it breathes a little while running (glow()) */
   .room { fill: var(--wall); }
-  .inner { fill: var(--accent); }
+  .inner { fill: var(--red); }
   .edge { stroke: var(--pale); stroke-opacity: .16; stroke-width: .5; }
   .label { color: var(--pale); }
 
@@ -96,14 +96,14 @@
 <main>
   <h1>Unclench · 2 minutes</h1>
 
-  <div class="box" id="box" title="Tap to begin or move on">
+  <div class="box" id="box" title="Tap to begin or pause">
     <svg viewBox="0 0 100 100" role="img" aria-label="A room seen from its doorway; the red back wall comes closer with each step until it fills the frame">
       <defs>
         <clipPath id="win"><rect x="0" y="0" width="100" height="100"/></clipPath>
-        <linearGradient id="g0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient>
-        <linearGradient id="g1" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient>
-        <linearGradient id="g2" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient>
-        <linearGradient id="g3" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient>
+        <linearGradient id="g0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="var(--red)"/><stop offset="1" stop-color="var(--red)" stop-opacity="0"/></linearGradient>
+        <linearGradient id="g1" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="var(--red)"/><stop offset="1" stop-color="var(--red)" stop-opacity="0"/></linearGradient>
+        <linearGradient id="g2" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="var(--red)"/><stop offset="1" stop-color="var(--red)" stop-opacity="0"/></linearGradient>
+        <linearGradient id="g3" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="var(--red)"/><stop offset="1" stop-color="var(--red)" stop-opacity="0"/></linearGradient>
       </defs>
       <g clip-path="url(#win)">
         <rect class="room" x="0" y="0" width="100" height="100"/>
@@ -128,7 +128,7 @@
     <button id="btn" type="button">Begin</button>
     <button id="snd" type="button" class="snd" aria-pressed="true"><span class="sq"></span><span class="word"><span>Sound </span><span class="on">on</span><span class="off">off</span></span></button>
   </div>
-  <p class="hint">A ping marks each step. Tap to move on early. Space works too.</p>
+  <p class="hint">A ping marks each step; it moves on by itself. Tap to pause. Space works too.</p>
   <nav class="nav" aria-label="Instruments"><a class="x" href="index.html" aria-label="Previous: Box"><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="8" y="8" width="84" height="84"/></svg><span class="n">Box</span><svg class="ar" viewBox="0 0 100 100" aria-hidden="true"><path d="M94 50H10M40 20L10 50l30 30"/></svg></a><span class="x" aria-current="page"><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="8" y="8" width="84" height="84"/><rect x="38" y="38" width="24" height="24"/></svg><span class="n">Unclench</span></span><a class="x" href="hexagon.html" aria-label="Next: Hex"><svg class="ar" viewBox="0 0 100 100" aria-hidden="true"><path d="M6 50h84M60 20l30 30-30 30"/></svg><span class="n">Hex</span><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,5 89,27.5 89,72.5 50,95 11,72.5 11,27.5"/></svg></a></nav>
 </main>
 
@@ -169,7 +169,13 @@
       e.setAttribute('x1', C[i][0]); e.setAttribute('y1', C[i][1]); e.setAttribute('x2', R[i][0]); e.setAttribute('y2', R[i][1]);
     }
     inner.setAttribute('x', x0); inner.setAttribute('y', y0); inner.setAttribute('width', x1 - x0); inner.setAttribute('height', y1 - y0);
-    inner.setAttribute('fill-opacity', (0.7 + 0.3 * k).toFixed(3));
+    inner.setAttribute('fill-opacity', (0.86 + 0.14 * k).toFixed(3));
+  }
+  // the red is light, not paint: it swells and settles once every PULSE seconds, by an amount close to the edge of noticing
+  const PULSE = 7, still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function glow(t) {
+    const p = still ? 0 : Math.sin(2 * Math.PI * t / PULSE);
+    $('box').style.setProperty('--red', `hsl(${(4 + 2 * p).toFixed(2)} 100% ${(54 + 3 * p).toFixed(2)}%)`);
   }
   room(SIZE0);
   const whereEl = $('where'), leftEl = $('left'), btn = $('btn'), box = $('box');
@@ -182,6 +188,8 @@
   let rang = false;       // the step's "time is up" tone has played
   let exhale = -1;        // which exhale tone is sounding
   let running = false, last = 0, raf = 0;
+  let held = false;       // paused by the person (not by a hidden tab)
+  let sl = null;          // the exhale tone now sounding
 
   // Keep the phone's screen on while the timer runs (Android Chrome/Firefox, HTTPS).
   // Released on pause, finish, or when the tab is hidden. Nothing happens if unsupported.
@@ -272,6 +280,12 @@
     g.gain.linearRampToValueAtTime(0, t + secs);
     o.connect(g).connect(c.destination);
     o.start(t); o.stop(t + secs);
+    sl = { o, g, end: t + secs };
+  }
+  function hush() {                           // a pause cuts the exhale tone short, softly
+    if (!sl || !ctx || ctx.currentTime >= sl.end) { sl = null; return; }
+    try { const t = ctx.currentTime; sl.g.gain.cancelScheduledValues(t); sl.g.gain.setValueAtTime(sl.g.gain.value, t); sl.g.gain.linearRampToValueAtTime(0, t + 0.08); sl.o.stop(t + 0.1); } catch (e) {}
+    sl = null;
   }
 
   // ---- the instrument ----
@@ -280,7 +294,6 @@
     partEl.textContent = s.part;
     askEl.textContent = s.ask;
     whereEl.textContent = `Step ${step + 1} / ${N}`;
-    btn.textContent = step === N - 1 ? 'Finish' : 'Next';
   }
 
   function breathText(s) {
@@ -305,6 +318,7 @@
     room(sizeAt(step) + (sizeAt(step + 1) - sizeAt(step)) * f);
     leftEl.textContent = fmt(TOTAL - spent - Math.min(inStep, s.secs));
     root.style.setProperty('--h', 215 + 110 * (0.5 - 0.5 * Math.cos(2 * Math.PI * (spent + Math.min(inStep, s.secs)) / TOTAL)));
+    glow(actual);
     if (s.breath) breathText(s);
     if (f >= 1 && !rang) { rang = true; ping(); next(); if (!running) return; }   // time is up: the cue, then on
     raf = requestAnimationFrame(tick);
@@ -325,8 +339,9 @@
     show();
   }
 
-  function resume() { running = true; last = performance.now(); keepAwake(); raf = requestAnimationFrame(tick); }
-  function pause()  { running = false; cancelAnimationFrame(raf); letSleep(); }
+  function resume() { held = false; running = true; last = performance.now(); keepAwake(); btn.textContent = 'Pause'; raf = requestAnimationFrame(tick); }
+  function pause()  { running = false; cancelAnimationFrame(raf); letSleep(); hush(); }
+  function hold()   { held = true; pause(); btn.textContent = 'Resume'; }      // the person's pause: stays until they resume
 
   function finish() {
     pause();
@@ -340,7 +355,7 @@
   }
 
   function reset() {
-    room(SIZE0);
+    room(SIZE0); glow(0);
     root.style.setProperty('--h', 215);
     partEl.textContent = 'Ready';
     askEl.textContent = 'Put the day down for two minutes.';
@@ -353,7 +368,8 @@
   function act() {
     if (step < 0) begin();
     else if (step >= N) reset();
-    else next();
+    else if (running) hold();                   // no jumping ahead: the steps keep their time
+    else resume();
   }
 
   btn.addEventListener('click', act);
@@ -363,7 +379,7 @@
   });
   document.addEventListener('visibilitychange', () => {
     if (step < 0 || step >= N) return;
-    if (document.hidden) pause(); else if (!running) resume();
+    if (document.hidden) pause(); else if (!running && !held) resume();
   });
 })();
 </script>
