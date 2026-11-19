@@ -39,7 +39,7 @@
   .box { --wall: #070707; --pale: #f0ece4; --red: hsl(4 100% 54%); }   /* the wall's own red; it breathes a little while running (glow()) */
   .room { fill: var(--wall); }
   .inner { fill: var(--red); }
-  .edge { stroke: var(--pale); stroke-opacity: .16; stroke-width: .5; }
+  .edge { stroke: var(--pale); stroke-opacity: .05; stroke-width: .5; }   /* room() raises this as the wall nears */
   .label { color: var(--pale); }
 
   .label { position: absolute; inset: 0; display: grid; place-content: center; gap: 10px; padding: 18px; pointer-events: none; }
@@ -147,7 +147,15 @@
   const N = STEPS.length;
   const TOTAL = STEPS.reduce((a, s) => a + s.secs, 0);   // 120 s
   const SIZE0 = 0.12;                                     // the clenched square
-  const sizeAt = i => SIZE0 + (1 - SIZE0) * i / N;        // after i steps
+  // A real wall in a real room: it starts at rest, gathers speed over RAMP of the time, travels steadily, and slows to a
+  // full stop at the window. What the eye gets is 1 / distance, so it creeps for a long while and looms at the end.
+  const RAMP = 0.2;
+  function nearAt(t) {                                      // t seconds into the exercise -> k for room()
+    const x = Math.max(0, Math.min(1, t / TOTAL)), v = 1 / (1 - RAMP);          // v: the steady speed
+    const gone = x < RAMP ? v * x * x / (2 * RAMP) : x > 1 - RAMP ? 1 - v * (1 - x) * (1 - x) / (2 * RAMP) : v * (x - RAMP / 2);
+    const far = 1 / SIZE0;                                // the wall starts this many times farther off than it ends
+    return 1 / (far + (1 - far) * gone);
+  }
 
   const $ = id => document.getElementById(id);
   const inner = $('inner'), partEl = $('part'), askEl = $('ask');
@@ -160,8 +168,10 @@
     const C = [[x0, y0], [x1, y0], [x1, y1], [x0, y1]], R = [[ox, oy], [Ox, oy], [Ox, Oy], [ox, Oy]];   // back wall corners, room corners
     const far = [[50, y0], [x1, 50], [50, y1], [x0, 50]], near = [[50, oy], [Ox, 50], [50, Oy], [ox, 50]];
     const t = Math.max(0, Math.min(1, (k - 0.6) / 0.3)), red = GLOW * t * t * (3 - 2 * t);               // red only on the last stretch
+    const seen = (0.05 + 0.27 * Math.sqrt(Math.max(0, (k - SIZE0) / (1 - SIZE0)))).toFixed(3);          // the room's edges come out of the dark as the wall nears
     for (let i = 0; i < 4; i++) {
       const j = (i + 1) % 4, f = far[i], n = near[i], g = grads[i], e = edges[i];
+      e.setAttribute('stroke-opacity', seen);
       walls[i].setAttribute('points', [R[i], R[j], C[j], C[i]].map(p => p.map(v => v.toFixed(2)).join(',')).join(' '));
       g.setAttribute('x1', f[0]); g.setAttribute('y1', f[1]);
       g.setAttribute('x2', f[0] + (n[0] - f[0]) * REACH); g.setAttribute('y2', f[1] + (n[1] - f[1]) * REACH);
@@ -173,9 +183,10 @@
   }
   // the red is light, not paint: it swells and settles once every PULSE seconds, by an amount close to the edge of noticing
   const PULSE = 7, still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DRIFT = 48;                                       // seconds for the red to go through cherry to purple and back
   function glow(t) {
-    const p = still ? 0 : Math.sin(2 * Math.PI * t / PULSE);
-    $('box').style.setProperty('--red', `hsl(${(4 + 2 * p).toFixed(2)} 100% ${(54 + 3 * p).toFixed(2)}%)`);
+    const p = still ? 0 : Math.sin(2 * Math.PI * t / PULSE), c = 0.5 - 0.5 * Math.cos(2 * Math.PI * t / DRIFT);   // c: 0 red .. 1 purple
+    $('box').style.setProperty('--red', `hsl(${(4 - 42 * c + 2 * p).toFixed(2)} 100% ${(54 - 5 * c + 3 * p).toFixed(2)}%)`);
   }
   room(SIZE0);
   const whereEl = $('where'), leftEl = $('left'), btn = $('btn'), box = $('box');
@@ -315,7 +326,7 @@
     inStep += dt; actual += dt;
     const s = STEPS[step];
     const f = Math.min(1, inStep / s.secs);
-    room(sizeAt(step) + (sizeAt(step + 1) - sizeAt(step)) * f);
+    room(nearAt(spent + Math.min(inStep, s.secs)));
     leftEl.textContent = fmt(TOTAL - spent - Math.min(inStep, s.secs));
     root.style.setProperty('--h', 215 + 110 * (0.5 - 0.5 * Math.cos(2 * Math.PI * (spent + Math.min(inStep, s.secs)) / TOTAL)));
     glow(actual);
@@ -335,7 +346,7 @@
     spent += STEPS[step].secs;
     step += 1; inStep = 0; rang = false; exhale = -1;
     if (step >= N) { finish(); return; }
-    room(sizeAt(step));
+    room(nearAt(spent));
     show();
   }
 

@@ -33,7 +33,10 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   variation 1 of https://claude.ai/artifact/HWx46XJyvrKQG7E4aV8DEc): black walls, the room wider than the window (`MX` 12,
   `MY` 3) so its hairline edges leave through the sides, not the corners; the red back wall comes closer (`room(k)`) and
   the walls take a faint red (`GLOW`) only on the last stretch. The text in the room is pale in both themes. The wall's red is its own (`--red`, hsl 4 100% 54%), and while running it
-  breathes once every 7 s by 3 % of lightness (`glow`, `PULSE`; still under reduced motion) (Vlad, 18 Nov, after Turrell). The square
+  breathes once every 7 s by 3 % of lightness (`glow`, `PULSE`; still under reduced motion) (Vlad, 18 Nov, after Turrell).
+  19 Nov: the wall moves as a real wall would (`nearAt(t)`: at rest, speeds up over `RAMP` 20 % of the time, steady, slows to
+  a stop; size is 1 / distance, so it creeps and then looms; it no longer steps per stage). The room's edges are faint when
+  the wall is far and clearer as it nears. The red drifts through cherry to purple and back every 48 s (`DRIFT`). The square
   grows from `SIZE0` to 1 over the step's time; when it is up a ping sounds and the next step
   starts by itself (Vlad, 5 Nov). The button is Pause / Resume; nothing jumps a step (Vlad, 18 Nov).
   Sound is Web Audio (220 Hz ping at each step change; 330→165 Hz slide on
