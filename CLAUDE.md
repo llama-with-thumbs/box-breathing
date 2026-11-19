@@ -80,6 +80,15 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   (`TURN`, `ZOOM`) and comes back to you at the top corner and at the end (`HOME`). From a practice of widening
   perception (Vlad). Sound: the Box corner clicks 1-3, one per corner; no tone. Order is now Box, Unclench, Hex, Sit,
   Widen. Built by `sounds/recipe/widen.py`, which also rewrites the switch on every page.
+- `hum.html` (19 Nov): hum along with a melody and breathe in where a singer would. Shape: a figure from Bulgarian
+  embroidery (Vlad's picture, 20 corners) with a red square at the centre; the square is the air (fills on the breath in,
+  is spent by the hum); a dot walks the outline once per round. Melody: "Bre, Petrunko" (Bulgarian traditional), top voice
+  of Violin Republic's free duet score (YouTube 6_MC5bH2_EY), 2/4 in D with E flat, F sharp, C sharp; 88 bpm; seven
+  phrases, each ending where the score rests, with a three-beat breath between. One round (79 s) is synthesized with
+  DawDreamer (soft pipes an octave apart, small room) and embedded as mp3 (about 320 KB); two rounds = 2:38. The rendered
+  audio was pitch-checked against the score bar by bar. Only one score was reachable (pdfcoffee and the Memphis thesis
+  refused downloads), so the tune is not cross-checked against a second source. Order: Box, Unclench, Hex, Sit, Widen,
+  Hum. Recipe: `sounds/recipe/hum.py` (also rewrites every switch).
 - Geometry (16 Nov): the square (72vw, 300 px), gap 36, `#btn` 140 px, `#snd` 128 px and a three-line `.hint` are the
   same on all four pages, so nothing moves when switching. Keep them equal on any new page.
 - Synthesizer (16 Nov): DawDreamer (`pip install dawdreamer`, GPL-3, about 40 MB) runs Faust physical models and the Zita
