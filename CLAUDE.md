@@ -72,6 +72,11 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   goes back to the start of the line. The aim is to stay with it, not to make it go; the page never promises relief.
   Recipe: `sounds/recipe/sitvoice.py` (needs `pip install kokoro-onnx` and the two model files; changing a line in
   `LINES` means running it again). Voice gallery: https://claude.ai/artifact/JzeNk1z3jpkKqXdDuPXkYd
+- `widen.html` (19 Nov): a triangle of light, 15 s a side, 3 rounds = 2:15. Three silhouettes, one inside the next: you
+  (seated figure), the house you are in, the city around it; the picture zooms out in the first 5 s after each corner
+  (`TURN`, `ZOOM`) and comes back to you at the top corner and at the end (`HOME`). From a practice of widening
+  perception (Vlad). Sound: the Box corner clicks 1-3, one per corner; no tone. Order is now Box, Unclench, Hex, Sit,
+  Widen. Built by `sounds/recipe/widen.py`, which also rewrites the switch on every page.
 - Geometry (16 Nov): the square (72vw, 300 px), gap 36, `#btn` 140 px, `#snd` 128 px and a three-line `.hint` are the
   same on all four pages, so nothing moves when switching. Keep them equal on any new page.
 - Synthesizer (16 Nov): DawDreamer (`pip install dawdreamer`, GPL-3, about 40 MB) runs Faust physical models and the Zita
