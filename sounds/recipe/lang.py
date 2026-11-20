@@ -83,10 +83,11 @@ RU = {
     # Widen
     'Widen · 2 minutes': 'Шире · 2 минуты',
     'You': 'Ты', 'House': 'Дом', 'City': 'Город',
-    'You, the house you are in, the city around it, then you again. Fifteen seconds a side. Let your attention widen with the picture.':
-        'Ты, твой дом, город вокруг, и снова ты. По пятнадцать секунд на сторону. Пусть внимание расширяется вместе с картинкой.',
-    'A triangle of light. Inside it a seated figure, then the house around the figure, then the city around the house, then the figure again; a dot travels one side every fifteen seconds':
-        'Треугольник света. В нём сидящая фигура, потом дом вокруг фигуры, потом город вокруг дома, потом снова фигура; точка проходит одну сторону за пятнадцать секунд',
+    'Face': 'Лицо', 'Room': 'Комната', 'Neighbourhood': 'Район', 'Back': 'Обратно',
+    'From your eyes out to the city, then back. Fifteen seconds a side. Let your attention widen with the picture.':
+        'От твоих глаз до города и обратно. По пятнадцать секунд на сторону. Пусть внимание расширяется вместе с картинкой.',
+    'A triangle of light. Inside it two eyes, then the face, the seated person, the room, the house, the neighbourhood and the city, each around the last, then the eyes again; a dot travels one side every fifteen seconds':
+        'Треугольник света. В нём два глаза, потом лицо, сидящий человек, комната, дом, район и город, каждое вокруг предыдущего, потом снова глаза; точка проходит одну сторону за пятнадцать секунд',
     # Hum
     'Hum · 2½ minutes': 'Напев · 2½ минуты',
     'Breathe in': 'Вдох', 'Rest': 'Отдых',

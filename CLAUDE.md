@@ -75,11 +75,16 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   goes back to the start of the line. The aim is to stay with it, not to make it go; the page never promises relief.
   Recipe: `sounds/recipe/sitvoice.py` (needs `pip install kokoro-onnx` and the two model files; changing a line in
   `LINES` means running it again). Voice gallery: https://claude.ai/artifact/JzeNk1z3jpkKqXdDuPXkYd
-- `widen.html` (19 Nov): a triangle of light, 15 s a side, 3 rounds = 2:15. Three silhouettes, one inside the next: you
-  (seated figure), the house you are in, the city around it; the picture zooms out in the first 5 s after each corner
-  (`TURN`, `ZOOM`) and comes back to you at the top corner and at the end (`HOME`). From a practice of widening
-  perception (Vlad). Sound: the Box corner clicks 1-3, one per corner; no tone. Order is now Box, Unclench, Hex, Sit,
-  Widen. Built by `sounds/recipe/widen.py`, which also rewrites the switch on every page.
+- `widen.html` (19 Nov, new picture 20 Nov): a triangle of light, 15 s a side, 3 rounds = 9 sides = 2:15. One line drawing,
+  each thing inside the next (Vlad, 20 Nov): two eyes, the face with shoulders, the seated person, the room, the house
+  (four storeys, constructivist: two bays, ribbon windows, a stair tower; the person on the second floor), the
+  neighbourhood, the city. Sides: Eyes, Face, You, Room, House, Neighbourhood, City, Back, Eyes. The picture widens in the
+  first 5 s after each corner (`TURN`); the eighth side dives back to the eyes (my guess, not asked for). The drawing is in
+  metres; the page only scales and shifts it (`VIEWS`, `zoom`: a pure zoom, nothing slides) and fades detail by scale
+  (`picture`): near, things are lines; far, they become solid shapes. A ground line at y = 73 carries the label under it.
+  From a practice of widening perception (Vlad). Sound: the Box corner clicks 1-3, one per corner; no tone.
+  Built by `sounds/recipe/widen.py` (the page) and then `sounds/recipe/widen2.py` (this picture, patched in place); run
+  `lang.py` after.
 - `hum.html` (19 Nov): hum along with a melody and breathe in where a singer would. Shape: a figure from Bulgarian
   embroidery (Vlad's picture, 20 corners) with a red square at the centre; the square is the air (fills on the breath in,
   is spent by the hum); a dot walks the outline once per round. Melody: "Bre, Petrunko" (Bulgarian traditional), top voice
