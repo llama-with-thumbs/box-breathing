@@ -2,7 +2,7 @@
 (four storeys, constructivist, the person on the second floor), the neighbourhood, the city; then back to the eyes.
 
 Run from the repository root, on the widen.html made by widen.py:  python -X utf8 sounds/recipe/widen2.py
-It swaps the drawing, its styles and the walk in place, and can only run once (it asserts on the old text).
+It swaps the drawing, its styles and the walk in place. Run again later, it replaces only the drawing and VIEWS.
 Run sounds/recipe/lang.py after it.
 
 The drawing is in metres, y down, the person's floor at y = 0 and the person at x = 0. Everything is one nested
@@ -21,19 +21,14 @@ def rect(x0, x1, y0, y1): return '<rect x="%g" y="%g" width="%g" height="%g"/>' 
 def line(x0, y0, x1, y1): return '<path d="M%g,%g L%g,%g"/>' % (x0, y0, x1, y1)
 
 
-# ---- the person: seated, seen from the front, 0.88 m tall ----
-BODY = ('M-0.03,-0.70 L-0.035,-0.60 Q-0.05,-0.575 -0.16,-0.56 Q-0.25,-0.55 -0.26,-0.46 L-0.285,-0.24 L-0.42,-0.12 Q-0.5,-0.06 -0.46,0 '
-        'L0.46,0 Q0.5,-0.06 0.42,-0.12 L0.285,-0.24 L0.26,-0.46 Q0.25,-0.55 0.16,-0.56 Q0.05,-0.575 0.035,-0.60 L0.03,-0.70 Z')
-HEAD = '<ellipse cx="0" cy="-0.76" rx="0.085" ry="0.11"/>'
-LIMBS = ('<path d="M-0.2,-0.5 L-0.215,-0.27 L-0.33,-0.135"/><path d="M0.2,-0.5 L0.215,-0.27 L0.33,-0.135"/>'
-         '<path d="M-0.42,-0.12 Q-0.1,-0.2 0.14,-0.035"/><path d="M0.42,-0.12 Q0.1,-0.2 -0.14,-0.035"/>')
-def eye(x, y=-0.765):
-    return ('<path d="M%g,%g Q%g,%g %g,%g Q%g,%g %g,%g Z"/>' % (x - 0.015, y, x, y - 0.012, x + 0.015, y, x, y + 0.009, x - 0.015, y)
-            + '<circle cx="%g" cy="%g" r="0.0047"/><circle class="ink" cx="%g" cy="%g" r="0.002"/>' % (x, y - 0.0008, x, y - 0.0008)
-            + '<path d="M%g,%g Q%g,%g %g,%g"/>' % (x - 0.019, y - 0.013, x, y - 0.023, x + 0.019, y - 0.014))
-FACE = (eye(-0.032) + eye(0.032)
-        + '<path d="M-0.004,-0.752 Q-0.012,-0.727 -0.009,-0.717 Q0,-0.711 0.009,-0.717"/>'
-        + '<path d="M-0.022,-0.692 Q0,-0.686 0.022,-0.692"/>')
+# ---- the person: seated, seen from the front, 0.87 m tall. A pictogram: circles and straight lines only (Vlad, 20 Nov) ----
+BODY = 'M-0.22,-0.66 L0.22,-0.66 L0.15,-0.2 L0.48,0 L-0.48,0 L-0.15,-0.2 Z'          # shoulders, waist, crossed legs
+HEAD = '<circle cx="0" cy="-0.77" r="0.1"/>'
+LIMBS = '<path d="M-0.22,-0.66 L-0.34,-0.085"/><path d="M0.22,-0.66 L0.34,-0.085"/><path d="M-0.15,-0.2 L0.15,-0.2"/>'
+def eye(x, y=-0.775):                                # a lens of two equal arcs and a round pupil
+    return ('<path d="M%g,%g A0.02,0.02 0 0 1 %g,%g A0.02,0.02 0 0 1 %g,%g Z"/>' % (x - 0.016, y, x + 0.016, y, x - 0.016, y)
+            + '<circle class="ink" cx="%g" cy="%g" r="0.0045"/>' % (x, y))
+FACE = eye(-0.034) + eye(0.034) + '<path d="M0,-0.762 L0,-0.728"/><path d="M-0.02,-0.7 L0.02,-0.7"/>'
 YOU = ('<g id="you"><path class="lit" d="%s"/><g id="limbs">%s</g><g class="lit">%s</g>'
        '<g class="mass" id="mass" opacity="0"><path d="%s"/>%s</g><g id="face">%s</g></g>') % (BODY, LIMBS, HEAD, BODY, HEAD, FACE)
 
@@ -88,7 +83,7 @@ WALK = '''  // ---- the walk: nine sides. Seven views, each wider than the last;
   const TOTAL = SIDE * SIDES.length, CYCLE = TOTAL / LAPS;
   const TURN = 5;                                   // seconds the picture takes to widen after a corner
   // the seven views. The drawing is in metres: [x at the middle, y on the ground line, how many times bigger]
-  const VIEWS = [[0, -0.715, 380], [0, -0.40, 95], [0, 0, 50], [0, 0, 12], [0.7, 3.2, 2.6], [0.7, 3.2, 0.75], [0, 3.2, 0.16]];
+  const VIEWS = [[0, -0.725, 380], [0, -0.40, 95], [0, 0, 50], [0, 0, 12], [0.7, 3.2, 2.6], [0.7, 3.2, 0.75], [0, 3.2, 0.16]];
   const GX = 50, GY = 73;                           // the middle and the ground line, in the square
   const V = [[50, 7], [98, 90], [2, 90]];           // corners, clockwise from the top
 '''
@@ -148,6 +143,12 @@ def cut(start, end, new):                            # replace from start up to 
     s = s[:i] + new + s[j:]
 
 
+if 'class="scene"' in s:                             # already patched: only the drawing and the views change
+    cut('<defs><clipPath id="in">', ' id="dot"', SVG)
+    views = re.search(r'  const VIEWS = .*', WALK).group(0)
+    i = s.index('  const VIEWS = '); j = s.index('\n', i)
+    s = s[:i] + views + s[j:]
+    open(P, 'w', encoding='utf-8', newline='\n').write(s); print(P, len(s), 'drawing replaced'); raise SystemExit
 cut('  /* three silhouettes against the light', '  .label {', CSS + '\n')
 cut('<defs><clipPath id="in">', ' id="dot"', SVG)
 cut('  // ---- the three sides', '\n  const $ = id', WALK.rstrip('\n'))
