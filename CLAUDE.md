@@ -89,6 +89,15 @@ Rules for Vlad: `~/.claude/CLAUDE.md`. Who you are here: the agent file.
   audio was pitch-checked against the score bar by bar. Only one score was reachable (pdfcoffee and the Memphis thesis
   refused downloads), so the tune is not cross-checked against a second source. Order: Box, Unclench, Hex, Sit, Widen,
   Hum. Recipe: `sounds/recipe/hum.py` (also rewrites every switch).
+- Language (20 Nov): one small word in the top right corner of every page, RUS / ENG (`#lang`), remembered in
+  `localStorage` `instruments.lang`; a Russian browser starts in Russian. The pages still write English; one block,
+  the same on all six pages, shows the Russian in its place (`RU` whole strings, `RULES` strings with numbers) and keeps
+  the English on each text node, so the switch works mid-exercise without a reload. All Russian text lives in
+  `sounds/recipe/lang.py`; change it there and run it (it rewrites the block on every page). New visible English text
+  needs a line in `RU`, or it stays English. Russian names: Квадрат, Разожми, Гекс, Посиди, Шире, Напев; address is «ты»,
+  no gendered verbs. Font: none added; the system font has Cyrillic in the same weights, and `<html lang>` is switched.
+  The Sit voice is English only (Kokoro has no Russian voice); its Russian hint says so. On Sit "Голос выкл" is 141 px
+  (13 over the shared 128), so the row wraps at 320 px in Russian only.
 - Geometry (16 Nov): the square (72vw, 300 px), gap 36, `#btn` 140 px, `#snd` 128 px and a three-line `.hint` are the
   same on all four pages, so nothing moves when switching. Keep them equal on any new page.
 - Synthesizer (16 Nov): DawDreamer (`pip install dawdreamer`, GPL-3, about 40 MB) runs Faust physical models and the Zita
